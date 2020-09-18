@@ -16,38 +16,41 @@ class Boy:
 		self.x, self.y = get_canvas_width() // 2, 85
 		self.frame = 0
 		self.image = load_image("../res/run_animation.png")
-		self.delta = 0
 		self.speed = 0
+		self.target = [(get_canvas_width() // 2 - 1, 85)]
+		self.target_idx = 0
 
 	def update(self):
-		global target
 		self.frame = (self.frame + 1) % 8
-		self.delta = helper.delta((self.x, self.y), (target[0], target[1]), self.speed)
-		result = helper.move_toward((self.x, self.y), (self.delta[0], self.delta[1]), (target[0], target[1]))
+		delta = helper.delta((self.x, self.y), (self.target[self.target_idx][0],
+		                                             self.target[self.target_idx][1]), self.speed)
+		result = helper.move_toward((self.x, self.y), (delta[0], delta[1]),
+		                            (self.target[self.target_idx][0], self.target[self.target_idx][1]))
 
 		if result[1] is True:
-			self.speed = 0
+			self.speed = 3
+			if self.target_idx < len(self.target) - 1:
+				self.target_idx += 1
 		else:
 			self.x = result[0][0]
 			self.y = result[0][1]
 
 	def speedup(self):
-		self.speed += 1
+		self.speed += 2
 
 	def draw(self):
 		self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
 
 
 def handle_events():
-	global running, target, boy
+	global running, boy
 	for event in get_events():
 		if event.type == SDL_QUIT:
 			running = False
 		elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
 			running = False
 		elif (event.type, event.button) == (SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT):
-			target[0] = event.x
-			target[1] = get_canvas_height() - event.y - 1
+			boy.target.append((event.x, get_canvas_height() - event.y - 1))
 			boy.speedup()
 
 
@@ -55,8 +58,6 @@ def handle_events():
 open_canvas()
 boy = Boy()
 grass = Grass()
-
-target = [get_canvas_width() // 2, 85]
 
 running = True
 while running:
@@ -70,7 +71,7 @@ while running:
 	boy.draw()
 	update_canvas()
 
-	delay(0.016)
+	delay(0.015)
 
 # finalization code
 close_canvas()
