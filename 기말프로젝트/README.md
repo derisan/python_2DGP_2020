@@ -19,14 +19,6 @@
 # Game scene
 
 ### Scene 설명
-'''mermaid
-graph LR
-A[Title] -- Press any key --> B[Setting]
-B -- Choose character and pet --> C[Game]
-C -- Select menu --> B
-C -- Game over--> D[Score]
-D -- Press retry button --> B
-'''
 1. Title scene:   타이틀 화면을 출력하는 씬이다.
 2. Setting scene: 플레이어가 캐릭터를 선택하는 씬이다.
 3. Game scene:    실제 게임이 이루어지는 씬이다.
