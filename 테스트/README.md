@@ -10,7 +10,7 @@ Dance Dance Revolution Light Ver.
 ### 원 게임에 대한 정보
 원 게임은 Dance Dance Revolution으로 콘솔 아케이드 등 여러가지 버전이 있지만, 내가 copy할 게임은 Playstation1 버전이다.
 장르는 리듬게임으로 음악과 함께 아래에서 위로 올라오는 상하좌우 방향키를 타이밍에 맞게 리듬감을 느끼며 누르는 게임이다.
-https://i.ytimg.com/vi/9_7El6jgX1c/hqdefault.jpg
+<img src="https://i.ytimg.com/vi/9_7El6jgX1c/hqdefault.jpg" width="40%" height="30%" title="px(픽셀) 크기 설정" alt="untitled"></img>
 
 ### 게임의 목적과 방법
 우선 2D는 기본적으로 3D보다는 연출 등의 면에서 효과가 떨어진다. 그렇기 때문에 보여줄 수 있는 효과도 적은 편이다. 하지만, 리듬게임의 경우, 그나마 2D의 리소스를 살리면서 재미도 느낄 수 있는 게임이라 리듬게임을 기말 프로젝트로 만들기로 결정하였다.
