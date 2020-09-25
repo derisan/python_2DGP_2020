@@ -62,7 +62,7 @@
 
 ##### 다른 Scene으로의 이동 조건 및 방법
 1. Game to Menu: esc키를 누르면 Menu 씬으로 이동한다.
-2. Game to Scroe: 플레이어의 체력이 모두 소진되면 게임오버가 되면서 Score 씬으로 이동한다.
+2. Game to Score: 플레이어의 체력이 모두 소진되면 게임오버가 되면서 Score 씬으로 이동한다.
 - - - 
 ### Menu scene
 캐릭터 재선택, 게임 종료를 선택할 수 있는 씬이다.
@@ -75,7 +75,8 @@
 2. 엔터 키: 메뉴 선택
 
 ##### 다른 Scene으로의 이동 조건 및 방법
-1. Menu to Setting: 플레이어가 메뉴에서 캐릭터 재선택을 선택했을 시 Setting 씬으로 이동한다. 
+1. Menu to Setting: 플레이어가 메뉴에서 캐릭터 재선택을 선택했을 시 Setting 씬으로 이동한다.
+2. Menu to Game: esc키를 누르면 Game 씬으로 되돌아간다.
 - - -
 ### Score scene
 플레이어의 점수와 순위표를 출력하는 씬이다.
