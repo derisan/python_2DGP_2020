@@ -9,6 +9,8 @@
  머쉬런(Mushrun)
 ### 원 게임에 대한 정보
  기말 프로젝트의 모티브가 되는 게임은 Devsisters가 개발한 **쿠키런**이다.
+ 
+ <img src="https://image.edaily.co.kr/images/Photo/files/NP/S/2020/03/PS20031300697.jpg" width="40%" height="30%" title="px(픽셀) 크기 설정" alt="CooeRun"></img>
 ### 게임 컨셉
  1. 기록 경신의 재미
  1. 복잡한 조작은 지양, 오직 슬라이딩과 점프만
@@ -19,10 +21,12 @@
  1. 젤리
  1. 방해물
 
-<img src="https://i.ytimg.com/vi/cU1SCXHKmLs/maxresdefault.jpg" width="40%" height="30%" title="px(픽셀) 크기 설정" alt="CookieRun"></img>
-
 ### 게임의 목적과 방법
  기말 프로젝트로 만들 '머쉬런'은 끝없이 진행되는 **횡스크롤 러닝 게임**이다. 플레이어는 점프와 슬라이드를 이용해 장애물을 피하고 젤리를 먹어 점수를 올릴 수 있다. 플레이어의 체력이 소진될 때까지 게임은 진행되며 게임이 끝난 시점의 점수를 기록해 순위표를 만들 예정이다.
+ 
+### 플레이 장면(예시)
+
+<img src="https://i.ytimg.com/vi/cU1SCXHKmLs/maxresdefault.jpg" width="40%" height="30%" title="px(픽셀) 크기 설정" alt="CookieRun"></img>
 
 # 개발 범위
 |     내용        |최소 범위                      |추가 범위                    |
