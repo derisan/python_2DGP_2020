@@ -1,4 +1,3 @@
-# version 2020-0927
 import time
 from pico2d import *
 import random
@@ -22,7 +21,7 @@ def run(state):
     running = True
     stack = [state]
 
-    w, h = 800, 600
+    w, h = 1280, 800
     if hasattr(state, 'canvas_width'):
         w = state.canvas_width
     if hasattr(state, 'canvas_height'):
@@ -53,7 +52,7 @@ def run(state):
         stack[-1].draw()
         update_canvas()
 
-        delay(frame_interval)
+        # delay(frame_interval)
 
     while len(stack) > 0:
         stack[-1].exit()
