@@ -170,7 +170,11 @@ class SlidingState:
 
     def update(self):
         self.time += gfw.delta_time
-        if self.time > 1.0:
+        key_state = SDL_GetKeyboardState(None)
+        if key_state[SDL_SCANCODE_SPACE]:
+            self.time = 0
+
+        if self.time > Player.SLIDE_DURATION:
             self.player.set_state(RunningState)
 
         _, foot, _, _ = self.player.get_bb()
@@ -189,12 +193,12 @@ class Player:
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
     KEYDOWN_DOWN = (SDL_KEYDOWN, SDLK_DOWN)
 
-    SLIDE_DURATION = 1.0
+    SLIDE_DURATION = 0.05
     GRAVITY = 3000
     JUMP = 750
 
     BB_DIFFS = [
-        (-25, -33, 25, 33),   # ELSE
+        (-25, -33, 25, 33),  # ELSE
         (-25, -33, 25, 0),  # SLIDING
     ]
 
