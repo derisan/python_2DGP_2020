@@ -71,14 +71,19 @@ class JumpState:
         self.time = 0
         self.frame = 0
         self.jump_speed = Player.JUMP
+        self.jump_count = 0
 
     def enter(self):
         self.time = 0
         self.frame = 0
-        self.jump_speed = Player.JUMP
+        self.jump_count += 1
+        if self.jump_count > 2:
+            pass
+        else:
+            self.jump_speed = Player.JUMP
 
     def exit(self):
-        pass
+        self.jump_count = 0
 
     def draw(self):
         self.images[self.frame].draw(*self.player.pos)
@@ -96,7 +101,9 @@ class JumpState:
                 self.player.set_state(RunningState)
 
     def handle_event(self, evt):
-        pass
+        key_state = SDL_GetKeyboardState(None)
+        if key_state[SDL_SCANCODE_C]:
+            self.enter()
 
 
 class FallingState:
@@ -195,7 +202,7 @@ class Player:
 
     SLIDE_DURATION = 0.05
     GRAVITY = 3000
-    JUMP = 750
+    JUMP = 680
 
     BB_DIFFS = [
         (-25, -33, 25, 33),  # ELSE
