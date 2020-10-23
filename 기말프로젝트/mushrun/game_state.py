@@ -3,34 +3,46 @@ from pico2d import *
 import gfw
 import gobj
 from background import Background
-from platform import Platform
+from game_platform import Platform
+from player import Player
 
 canvas_width = 1280
 canvas_height = 800
 
 
 def enter():
-    gfw.world.init(['bg'])
+    gfw.world.init(['bg', 'platform', 'player'])
 
-    bg = Background('background/bg_far.png')
+    bg = Background('background/stage1_bg_far.png')
     bg.speed = 10
     gfw.world.add(gfw.layer.bg, bg)
 
-    bg = Background('background/bg_near.png')
+    bg = Background('background/stage1_bg_near.png')
     bg.speed = 150
     bg.y_scale = 1.75
     gfw.world.add(gfw.layer.bg, bg)
 
     pf = Platform(Platform.Floor, 0, 0)
-    gfw.world.add(gfw.layer.bg, pf)
+    gfw.world.add(gfw.layer.platform, pf)
+
+    global player
+    player = Player()
+    gfw.world.add(gfw.layer.player, player)
 
 
 paused = False
+
+
 def update():
     if paused:
         return
 
     gfw.world.update()
+
+    dx = -50 * gfw.delta_time
+
+    # for obj in gfw.world.objects_at(gfw.layer.platform):
+    #     obj.move(dx)
 
 
 def draw():

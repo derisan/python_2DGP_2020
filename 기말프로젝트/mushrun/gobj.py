@@ -71,7 +71,7 @@ def draw_collision_box():
     Draw collision box if obj has get_bb()
     """
     for obj in gfw.world.all_objects():
-        if hasattr(obj, 'geb_bb'):
+        if hasattr(obj, 'get_bb'):
             draw_rectangle(*obj.get_bb())
 
 
