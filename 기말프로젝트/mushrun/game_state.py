@@ -10,7 +10,7 @@ from player import Player
 from meso import Meso
 
 canvas_width = 1280
-canvas_height = 800
+canvas_height = 600
 
 
 def enter():

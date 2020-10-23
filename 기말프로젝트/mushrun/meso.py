@@ -27,7 +27,6 @@ class Meso:
         self.x += dx
         if self.x + MESO_SIZE < 0:
             gfw.world.remove(self)
-            print(self)
 
     def get_bb(self):
         hw = MESO_SIZE

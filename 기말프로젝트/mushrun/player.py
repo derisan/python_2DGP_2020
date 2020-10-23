@@ -97,14 +97,14 @@ class Player:
     JUMP = 750
 
     def __init__(self):
-        self.pos: Tuple = 150, get_canvas_height() // 2
+        self.pos: Tuple = 150, 105
         self.delta: Tuple = 0, 0
 
         self.pet = Pet(*self.pos)
         gfw.world.add(gfw.layer.player, self.pet)
 
         self.state = None
-        self.set_state(JumpState)
+        self.set_state(RunningState)
 
     def update(self):
         self.state.update()
