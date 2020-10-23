@@ -160,12 +160,13 @@ class SlidingState:
     def enter(self):
         self.time = 0
         self.frame = 0
+        self.player.bb_idx = 1
 
     def exit(self):
-        pass
+        self.player.bb_idx = 0
 
     def draw(self):
-        self.images[self.frame].draw(*self.player.pos)
+        self.images[self.frame].draw(self.player.pos[0], self.player.pos[1] - 15)
 
     def update(self):
         self.time += gfw.delta_time
@@ -192,6 +193,11 @@ class Player:
     GRAVITY = 3000
     JUMP = 750
 
+    BB_DIFFS = [
+        (-25, -33, 25, 33),   # ELSE
+        (-25, -33, 25, 0),  # SLIDING
+    ]
+
     def __init__(self):
         self.pos: Tuple = 150, get_canvas_height() // 2
         self.delta: Tuple = 0, 0
@@ -201,6 +207,8 @@ class Player:
 
         self.state = None
         self.set_state(RunningState)
+
+        self.bb_idx = 0
 
     def update(self):
         self.state.update()
@@ -214,11 +222,10 @@ class Player:
         self.pet.handle_event(evt)
 
     def get_bb(self):
-        hw = 50
-        hh = 33
+        l, b, r, t = Player.BB_DIFFS[self.bb_idx]
         x, y = self.pos
         # print(x - hw, y - hh, x + hw, y + hh)
-        return x - hw / 2, y - hh, x + hw / 2, y + hh
+        return x + l, y + b, x + r, y + t
 
     def set_state(self, clazz):
         if self.state is not None:
