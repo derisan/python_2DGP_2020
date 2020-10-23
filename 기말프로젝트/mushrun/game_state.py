@@ -12,13 +12,13 @@ canvas_height = 800
 def enter():
     gfw.world.init(['bg'])
 
-    bg = Background('background/mt_huji.png')
+    bg = Background('background/bg_far.png')
     bg.speed = 10
     gfw.world.add(gfw.layer.bg, bg)
 
-    bg = Background('background/sakura.png')
+    bg = Background('background/bg_near.png')
     bg.speed = 150
-    bg.y_scale = 1.5
+    bg.y_scale = 1.75
     gfw.world.add(gfw.layer.bg, bg)
 
     pf = Platform(Platform.Floor, 0, 0)
