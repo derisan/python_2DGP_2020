@@ -71,10 +71,13 @@ class SkillState:
         self.images[self.frame].composite_draw(0, 'h', *self.pet.pos)
 
     def update(self):
+        self.repeat = len(self.images) * 3
         self.time += gfw.delta_time
-        self.frame = round(self.time * self.FPS)
-        if self.frame > 3:
+        frame = round(self.time * self.FPS)
+        if frame >= self.repeat:
             self.pet.set_state(RunningState)
+        else:
+            self.frame = frame % 4
 
     def handle_event(self, evt):
         pass
@@ -97,12 +100,6 @@ class Pet:
 
     def handle_event(self, evt):
         self.state.handle_event(evt)
-
-    def get_bb(self):
-        hw = 22
-        hh = 22
-        x, y = self.pos
-        return x - hw, y - hh, x + hw, y + hh
 
     def set_state(self, clazz):
         if self.state is not None:
