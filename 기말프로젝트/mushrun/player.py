@@ -39,6 +39,14 @@ class RunningState:
         self.time += gfw.delta_time
         self.frame = round(self.time * self.FPS) % len(self.images)
 
+        _, foot, _, _ = self.player.get_bb()
+        platform = self.player.get_platform(foot)
+        if platform is not None:
+            l, b, r, t = platform.get_bb()
+            if foot > t:
+                self.player.set_state(FallingState)
+
+
     def handle_event(self, evt):
         pair = evt.type, evt.key
         if pair == Player.KEYDOWN_C:
@@ -88,13 +96,56 @@ class JumpState:
         pass
 
 
+class FallingState:
+    @staticmethod
+    def get(player):
+        if not hasattr(FallingState, 'singleton'):
+            FallingState.singleton = FallingState()
+            FallingState.singleton.player = player
+            FallingState.singleton.images = []
+            FallingState.singleton.images.append(gfw.image.load(gobj.res('player/jump/Frame0.png')))
+
+        return FallingState.singleton
+
+    def __init__(self):
+        self.time = 0
+        self.frame = 0
+        self.jump_speed = 0
+
+    def enter(self):
+        self.time = 0
+        self.frame = 0
+        self.jump_speed = 0
+
+    def exit(self):
+        pass
+
+    def draw(self):
+        self.images[self.frame].draw(*self.player.pos)
+
+    def update(self):
+        self.player.move((0, self.jump_speed * gfw.delta_time))
+        self.jump_speed -= Player.GRAVITY * gfw.delta_time
+
+        _, foot, _, _ = self.player.get_bb()
+        platform = self.player.get_platform(foot)
+        if platform is not None:
+            l, b, r, t = platform.get_bb()
+            if self.jump_speed < 0 and int(foot) <= t:
+                self.player.move((0, t - foot))
+                self.player.set_state(RunningState)
+
+    def handle_event(self, evt):
+        pass
+
+
 class Player:
     KEYDOWN_C = (SDL_KEYDOWN, SDLK_c)
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
 
     SLIDE_DURATION = 1.0
     GRAVITY = 3000
-    JUMP = 1000
+    JUMP = 750
 
     def __init__(self):
         self.pos: Tuple = 150, 105
