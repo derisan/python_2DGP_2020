@@ -46,7 +46,6 @@ class RunningState:
             if foot > t:
                 self.player.set_state(FallingState)
 
-
     def handle_event(self, evt):
         pair = evt.type, evt.key
         if pair == Player.KEYDOWN_C:
@@ -169,11 +168,11 @@ class Player:
         self.pet.handle_event(evt)
 
     def get_bb(self):
-        hw = 36
+        hw = 50
         hh = 33
         x, y = self.pos
         # print(x - hw, y - hh, x + hw, y + hh)
-        return x - hw, y - hh, x + hw, y + hh
+        return x - hw / 2, y - hh, x + hw / 2, y + hh
 
     def set_state(self, clazz):
         if self.state is not None:

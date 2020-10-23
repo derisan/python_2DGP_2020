@@ -7,7 +7,7 @@ import gobj
 
 UNIT_PER_LINE = 100
 SCREEN_LINES = 10
-BLOCK_SIZE = 60
+BLOCK_SIZE = 30
 
 lines = []
 

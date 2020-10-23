@@ -63,6 +63,9 @@ def handle_event(evt):
         if evt.key == SDLK_ESCAPE:
             gfw.pop()
             return
+        elif evt.key == SDLK_p:
+            global paused
+            paused = not paused
 
     if player.handle_event(evt):
         return
