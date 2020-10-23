@@ -59,6 +59,8 @@ def handle_event(evt):
             gfw.pop()
             return
 
+    if player.handle_event(evt):
+        return
 
 def exit():
     pass

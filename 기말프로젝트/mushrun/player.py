@@ -69,6 +69,7 @@ class Player:
 
     def handle_event(self, evt):
         self.state.handle_event(evt)
+        self.pet.handle_event(evt)
 
     def get_bb(self):
         hw = 36
