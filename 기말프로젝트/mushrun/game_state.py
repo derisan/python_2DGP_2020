@@ -13,7 +13,7 @@ canvas_height = 800
 
 
 def enter():
-    gfw.world.init(['bg', 'platform', 'player'])
+    gfw.world.init(['bg', 'enemy', 'platform', 'item', 'player'])
 
     bg = Background('background/stage1_bg_far.png')
     bg.speed = 10
@@ -23,11 +23,6 @@ def enter():
     bg.speed = 100
     bg.y_scale = 1.75
     gfw.world.add(gfw.layer.bg, bg)
-
-    pf = Platform(Platform.Floor, 0, 0)
-    gfw.world.add(gfw.layer.platform, pf)
-    pf = Platform(Platform.Floor, get_canvas_width(), 0)
-    gfw.world.add(gfw.layer.platform, pf)
 
     global player
     player = Player()
@@ -43,10 +38,23 @@ def update():
 
     gfw.world.update()
 
-    dx = -175 * gfw.delta_time
+    move_platform()
 
-    for obj in gfw.world.objects_at(gfw.layer.platform):
-        obj.move(dx)
+
+def move_platform():
+    x = 0
+    dx = -175 * gfw.delta_time
+    for layer in range(gfw.layer.enemy, gfw.layer.item + 1):
+        for obj in gfw.world.objects_at(layer):
+            obj.move(dx)
+            x = obj.right()
+
+    cw = get_canvas_width()
+    while x < cw:
+        pf = Platform(Platform.Floor, x, 0)
+        gfw.world.add(gfw.layer.platform, pf)
+        x += pf.width
+        # print('adding platform:', gfw.world.count_at(gfw.layer.platform))
 
 
 def draw():

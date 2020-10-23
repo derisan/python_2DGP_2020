@@ -2,7 +2,7 @@ import gfw
 import gobj
 
 INFO = [
-    (1280, 80, 'platform/platform.png'),
+    (640, 80, 'platform/platform.png'),
 ]
 
 
@@ -30,6 +30,5 @@ class Platform:
             # print('count was:', gfw.world.count_at(gfw.layer.platform))
             gfw.world.remove(self)
 
-    @property
     def right(self):
         return self.left + self.width
