@@ -30,5 +30,6 @@ class Platform:
             # print('count was:', gfw.world.count_at(gfw.layer.platform))
             gfw.world.remove(self)
 
+    @property
     def right(self):
         return self.left + self.width
