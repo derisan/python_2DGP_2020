@@ -3,6 +3,7 @@ from pico2d import *
 import gfw
 import gobj
 from background import Background
+from platform import Platform
 
 canvas_width = 1280
 canvas_height = 800
@@ -19,6 +20,9 @@ def enter():
     bg.speed = 150
     bg.y_scale = 1.5
     gfw.world.add(gfw.layer.bg, bg)
+
+    pf = Platform(Platform.Floor, 0, 0)
+    gfw.world.add(gfw.layer.bg, pf)
 
 
 paused = False
