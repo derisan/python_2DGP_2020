@@ -52,6 +52,8 @@ class RunningState:
             self.player.jump()
         elif pair == Player.KEYDOWN_SPACE:
             self.player.slide()
+        elif pair == Player.KEYDOWN_DOWN:
+            self.player.move_down_from_platform()
 
 
 class JumpState:
@@ -184,6 +186,7 @@ class SlidingState:
 class Player:
     KEYDOWN_C = (SDL_KEYDOWN, SDLK_c)
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
+    KEYDOWN_DOWN = (SDL_KEYDOWN, SDLK_DOWN)
 
     SLIDE_DURATION = 1.0
     GRAVITY = 3000
@@ -255,3 +258,13 @@ class Player:
                     selected = platform
                     sel_top = t
         return selected
+
+    def move_down_from_platform(self):
+        _, foot, _, _ = self.get_bb()
+        platform = self.get_platform(foot)
+        if not platform.can_pass:
+            return
+
+        x, y = self.pos
+        y -= platform.height / 2 + 1
+        self.pos = x, y

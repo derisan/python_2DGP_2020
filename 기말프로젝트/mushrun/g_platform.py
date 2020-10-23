@@ -16,6 +16,7 @@ class Platform:
         self.bottom = bottom
         self.width, self.height, fn = INFO[type]
         self.image = gfw.image.load(gobj.res(fn))
+        self.can_pass = type >= Platform.Short
 
     def update(self):
         pass
