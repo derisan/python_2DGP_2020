@@ -47,14 +47,14 @@ def create_object(ch, x, y):
     if ch in ['1', '2', '3', '4']:
         obj = Meso(ord(ch) - ord('1'), x, y)
         gfw.world.add(gfw.layer.item, obj)
-        print('creating Jelly', x, y)
+        # print('creating Jelly', x, y)
     elif ch in ['O', 'P', 'Q']:
         dy = 1 if ch == 'Q' else 3
         y -= dy * BLOCK_SIZE // 2
         x -= BLOCK_SIZE // 2
         obj = Platform(ord(ch) - ord('O'), x, y)
         gfw.world.add(gfw.layer.platform, obj)
-        print('creating Platform', x, y)
+        # print('creating Platform', x, y)
 
 
 def get(x, y):
