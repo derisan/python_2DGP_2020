@@ -3,6 +3,8 @@ import gobj
 
 INFO = [
     (640, 80, 'platform/platform.png'),
+    (100, 50, 'platform/medium_platform.png'),
+    (50, 50, 'platform/small_platform.png')
 ]
 
 

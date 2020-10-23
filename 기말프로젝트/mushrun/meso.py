@@ -5,16 +5,24 @@ import gobj
 
 MESO_SIZE = 15
 
+PATH = [
+    'coins/bronze/Frame',
+    'coins/gold/Frame',
+    'coins/bill/Frame',
+    'coins/sack/Frame'
+]
+
 
 class Meso:
-    def __init__(self, type: str, x, y):
+    def __init__(self, type: int, x, y):
         self.x, self.y = x, y
         self.images = []
+        fn = PATH[type]
         for i in range(3 + 1):
-            self.images.append(gfw.image.load(gobj.res('coins/' + type + '/Frame' + str(i) + '.png')))
+            self.images.append(gfw.image.load(gobj.res(fn + str(i) + '.png')))
         self.time = 0
         self.frame = 0
-        self.FPS = 4
+        self.FPS = 6
 
     def update(self):
         self.time += gfw.delta_time
@@ -34,7 +42,3 @@ class Meso:
         x, y = self.x, self.y
         # print(x - hw, y - hh, x + hw, y + hh)
         return x - hw, y - hh, x + hw, y + hh
-
-    @staticmethod
-    def get_random_meso() -> str:
-        return random.choice(['bronze', 'gold', 'bill', 'sack'])

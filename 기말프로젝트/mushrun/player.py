@@ -94,7 +94,7 @@ class Player:
 
     SLIDE_DURATION = 1.0
     GRAVITY = 3000
-    JUMP = 750
+    JUMP = 1000
 
     def __init__(self):
         self.pos: Tuple = 150, 105

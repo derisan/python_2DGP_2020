@@ -8,6 +8,7 @@ from background import Background
 from g_platform import Platform
 from player import Player
 from meso import Meso
+import stage_gen
 
 canvas_width = 1280
 canvas_height = 600
@@ -29,6 +30,8 @@ def enter():
     player = Player()
     gfw.world.add(gfw.layer.player, player)
 
+    stage_gen.load(gobj.res('stage_01.txt'))
+
 
 paused = False
 
@@ -39,30 +42,12 @@ def update():
 
     gfw.world.update()
 
-    move_platform()
-
-
-def move_platform():
-    x = 0
     dx = -175 * gfw.delta_time
     for layer in range(gfw.layer.enemy, gfw.layer.item + 1):
         for obj in gfw.world.objects_at(layer):
             obj.move(dx)
-            if hasattr(obj, 'right'):
-                r = obj.right
-                if x < r:
-                    x = r
 
-    cw = get_canvas_width()
-    while x < cw:
-        pf = Platform(Platform.Floor, x, 0)
-        gfw.world.add(gfw.layer.platform, pf)
-
-        meso = Meso(Meso.get_random_meso(), x + pf.width // 2, random.randint(200, 500))
-        gfw.world.add(gfw.layer.item, meso)
-
-        x += pf.width
-        # print('adding platform:', gfw.world.count_at(gfw.layer.platform))
+    stage_gen.update(dx)
 
 
 def draw():
