@@ -108,4 +108,7 @@ class Pet:
         self.state.enter()
 
     def know_pos(self, pos: Tuple):
+        """
+        Get player's position
+        """
         self.pos = pos[0] - 50, pos[1] + 30

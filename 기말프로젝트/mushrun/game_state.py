@@ -7,6 +7,7 @@ import gobj
 from background import Background
 from g_platform import Platform
 from player import Player
+from meso import Meso
 
 canvas_width = 1280
 canvas_height = 800
@@ -47,14 +48,19 @@ def move_platform():
     for layer in range(gfw.layer.enemy, gfw.layer.item + 1):
         for obj in gfw.world.objects_at(layer):
             obj.move(dx)
-            r = obj.right
-            if x < r:
-                x = r
+            if hasattr(obj, 'right'):
+                r = obj.right
+                if x < r:
+                    x = r
 
     cw = get_canvas_width()
     while x < cw:
         pf = Platform(Platform.Floor, x, 0)
         gfw.world.add(gfw.layer.platform, pf)
+
+        meso = Meso(Meso.get_random_meso(), x + pf.width // 2, random.randint(200, 500))
+        gfw.world.add(gfw.layer.item, meso)
+
         x += pf.width
         # print('adding platform:', gfw.world.count_at(gfw.layer.platform))
 
