@@ -50,6 +50,8 @@ class RunningState:
         pair = evt.type, evt.key
         if pair == Player.KEYDOWN_C:
             self.player.jump()
+        elif pair == Player.KEYDOWN_SPACE:
+            self.player.slide()
 
 
 class JumpState:
@@ -138,6 +140,47 @@ class FallingState:
         pass
 
 
+class SlidingState:
+    @staticmethod
+    def get(player):
+        if not hasattr(SlidingState, 'singleton'):
+            SlidingState.singleton = SlidingState()
+            SlidingState.singleton.player = player
+            SlidingState.singleton.images = []
+            SlidingState.singleton.images.append(gfw.image.load(gobj.res('player/slide/Frame0.png')))
+
+        return SlidingState.singleton
+
+    def __init__(self):
+        self.time = 0
+        self.frame = 0
+
+    def enter(self):
+        self.time = 0
+        self.frame = 0
+
+    def exit(self):
+        pass
+
+    def draw(self):
+        self.images[self.frame].draw(*self.player.pos)
+
+    def update(self):
+        self.time += gfw.delta_time
+        if self.time > 1.0:
+            self.player.set_state(RunningState)
+
+        _, foot, _, _ = self.player.get_bb()
+        platform = self.player.get_platform(foot)
+        if platform is not None:
+            l, b, r, t = platform.get_bb()
+            if foot > t:
+                self.player.set_state(FallingState)
+
+    def handle_event(self, evt):
+        pass
+
+
 class Player:
     KEYDOWN_C = (SDL_KEYDOWN, SDLK_c)
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
@@ -147,7 +190,7 @@ class Player:
     JUMP = 750
 
     def __init__(self):
-        self.pos: Tuple = 150, 105
+        self.pos: Tuple = 150, get_canvas_height() // 2
         self.delta: Tuple = 0, 0
 
         self.pet = Pet(*self.pos)
@@ -181,9 +224,14 @@ class Player:
         self.state.enter()
 
     def jump(self):
-        if self.state == JumpState:
-            return
+        # if self.state == JumpState or self.state == SlidingState:
+        #     return
         self.set_state(JumpState)
+
+    def slide(self):
+        # if self.state == JumpState or self.state == FallingState:
+        #     return
+        self.set_state(SlidingState)
 
     def move(self, diff: Tuple):
         self.pos = gobj.point_add(self.pos, diff)
