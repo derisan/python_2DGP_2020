@@ -106,3 +106,6 @@ class Pet:
             self.state.exit()
         self.state = clazz.get(self)
         self.state.enter()
+
+    def know_pos(self, pos: Tuple):
+        self.pos = pos[0] - 50, pos[1] + 30

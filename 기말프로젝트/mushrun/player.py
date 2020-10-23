@@ -57,7 +57,6 @@ class JumpState:
         return JumpState.singleton
 
     def __init__(self):
-        self.FPS = 8
         self.time = 0
         self.frame = 0
         self.jump_speed = Player.JUMP
@@ -66,7 +65,6 @@ class JumpState:
         self.time = 0
         self.frame = 0
         self.jump_speed = Player.JUMP
-        print("asdas")
 
     def exit(self):
         pass
@@ -110,6 +108,7 @@ class Player:
 
     def update(self):
         self.state.update()
+        self.pet.know_pos(self.pos)
 
     def draw(self):
         self.state.draw()
