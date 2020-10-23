@@ -196,7 +196,8 @@ class Player:
             l, b, r, t = platform.get_bb()
             if x < l or x > r:
                 continue
-            if foot < b:
+            mid = (b + t) // 2
+            if foot < mid:
                 continue
             if selected is None:
                 selected = platform
