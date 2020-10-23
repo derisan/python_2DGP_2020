@@ -22,7 +22,7 @@ class Platform:
         self.image.draw_to_origin(self.left, self.bottom, self.width, self.height)
 
     def get_bb(self):
-        return self.left, self.bottom, self.left + self.width, self.bottom + self.height
+        return self.left, self.bottom, self.left + self.width, self.bottom + self.height - 5
 
     def move(self, dx):
         self.left += dx

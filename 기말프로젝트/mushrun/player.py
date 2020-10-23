@@ -5,6 +5,7 @@ from pico2d import *
 
 import gfw
 import gobj
+from pet import Pet
 
 
 class Player:
@@ -25,6 +26,8 @@ class Player:
             self.images.append(gfw.image.load(gobj.res('player/move/Frame' + str(i) + '.png')))
         self.time = 0
         self.FPS = 8
+        self.pet = Pet(*self.pos)
+        gfw.world.add(gfw.layer.player, self.pet)
 
     def update(self):
         self.time += gfw.delta_time
