@@ -3,17 +3,47 @@ import random
 import gfw
 import gobj
 
-LUPIN_SIZE = 30
-
 
 class Banana:
-    pass
+    images = None
+    SPEED = 1.5
+    SIZE = 16
+
+    def __init__(self, x, y):
+        if Banana.images is None:
+            Banana.images = []
+            for i in range(3 + 1):
+                Banana.images.append(gfw.image.load(gobj.res('monsters/lupin/banana/Frame' + str(i) +
+                                                             '.png')))
+        self.x, self.y = x, y
+        self.time = 0
+        self.frame = 0
+        self.FPS = 4
+
+    def update(self):
+        self.time += gfw.delta_time
+        self.frame = round(self.time * self.FPS) % len(self.images)
+
+    def draw(self):
+        self.images[self.frame].draw(self.x, self.y)
+
+    def get_bb(self):
+        hw = Banana.SIZE
+        hh = Banana.SIZE
+        x, y = self.x, self.y
+        return x - hw, y - hh, x + hw, y + hh
+
+    def move(self, dx):
+        self.x += dx * Banana.SPEED
+        if self.x + Banana.SIZE < 0:
+            gfw.world.remove(self)
 
 
 class Lupin:
     RUN, THROW, DEAD = range(3)
     images = None
-    COOLDOWN = 1
+    COOLDOWN = 2
+    SIZE = 30
 
     def __init__(self, x, y):
         self.x, self.y = x, y
@@ -56,12 +86,12 @@ class Lupin:
 
     def move(self, dx):
         self.x += dx
-        if self.x + LUPIN_SIZE < 0:
+        if self.x + Lupin.SIZE < 0:
             gfw.world.remove(self)
 
     def throw_banana(self):
-        # create banana
-        pass
+        banana = Banana(self.x - 30, self.y)
+        gfw.world.add(gfw.layer.enemy, banana)
 
     def reset_things(self):
         self.cooldown = Lupin.COOLDOWN
@@ -69,8 +99,8 @@ class Lupin:
         self.frame = 0
 
     def get_bb(self):
-        hw = LUPIN_SIZE
-        hh = LUPIN_SIZE
+        hw = Lupin.SIZE
+        hh = Lupin.SIZE
         x, y = self.x, self.y
         # print(x - hw, y - hh, x + hw, y + hh)
         return x - hw, y - hh, x + hw, y + hh
