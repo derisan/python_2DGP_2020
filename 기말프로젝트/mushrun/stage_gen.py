@@ -1,6 +1,7 @@
 from pico2d import *
 from g_platform import Platform
 from meso import Meso
+from lupin import Lupin
 
 import gfw
 import gobj
@@ -55,6 +56,9 @@ def create_object(ch, x, y):
         obj = Platform(ord(ch) - ord('O'), x, y)
         gfw.world.add(gfw.layer.platform, obj)
         # print('creating Platform', x, y)
+    elif ch in ['X']:
+        obj = Lupin(x, y - 45)
+        gfw.world.add(gfw.layer.enemy, obj)
 
 
 def get(x, y):
