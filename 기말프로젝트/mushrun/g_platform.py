@@ -2,7 +2,7 @@ import gfw
 import gobj
 
 INFO = [
-    (640, 80, 'platform/platform.png'),
+    (600, 80, 'platform/long_platform.png'),
     (100, 50, 'platform/medium_platform.png'),
     (50, 50, 'platform/small_platform.png')
 ]
