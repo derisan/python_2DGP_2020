@@ -8,6 +8,7 @@ class Banana:
     images = None
     SPEED = 1.5
     SIZE = 16
+    BORDER = 4
 
     def __init__(self, x, y):
         if Banana.images is None:
@@ -28,8 +29,8 @@ class Banana:
         self.images[self.frame].draw(self.x, self.y)
 
     def get_bb(self):
-        hw = Banana.SIZE
-        hh = Banana.SIZE
+        hw = Banana.SIZE - 5
+        hh = Banana.SIZE - 5
         x, y = self.x, self.y
         return x - hw, y - hh, x + hw, y + hh
 
@@ -42,7 +43,7 @@ class Banana:
 class Lupin:
     RUN, THROW, DEAD = range(3)
     images = None
-    COOLDOWN = 2
+    COOLDOWN = 1
     SIZE = 60
 
     def __init__(self, x, y):
@@ -90,7 +91,7 @@ class Lupin:
             gfw.world.remove(self)
 
     def throw_banana(self):
-        banana = Banana(self.x - 30, self.y + 10)
+        banana = Banana(self.x - 30, self.y - 10)
         gfw.world.add(gfw.layer.enemy, banana)
 
     def reset_things(self):

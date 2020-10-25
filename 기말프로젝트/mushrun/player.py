@@ -204,11 +204,11 @@ class Player:
 
     SLIDE_DURATION = 0.05
     GRAVITY = 3000
-    JUMP = 680
+    JUMP = 700
 
     BB_DIFFS = [
-        (-25, -33, 25, 33),  # ELSE
-        (-25, -33, 25, -15),  # SLIDING
+        (-20, -33, 20, 33),  # ELSE
+        (-20, -33, 20, -15),  # SLIDING
     ]
 
     def __init__(self):
