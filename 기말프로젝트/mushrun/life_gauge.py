@@ -76,3 +76,11 @@ class LifeGauge:
 
     def update(self):
         pass
+
+    def decrease_hp(self):
+        if self.hp > 0:
+            self.hp -= 1
+
+        if self.hp == 0:
+            # you die
+            pass

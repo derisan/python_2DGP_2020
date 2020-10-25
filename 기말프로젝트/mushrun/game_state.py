@@ -39,6 +39,7 @@ def enter():
 
     stage_gen.load(gobj.res('stage_01.txt'))
 
+    global lg
     lg = LifeGauge(10, 10)
     gfw.world.add(gfw.layer.ui, lg)
 
@@ -72,9 +73,11 @@ def check_items():
 
 
 def check_enemy():
+    global lg
     for enemy in gfw.world.objects_at(gfw.layer.enemy):
         if gobj.collides_box(player, enemy):
             # Decrease player's hp
+            lg.decrease_hp()
             # Invincible for a moment after collision
             gfw.world.remove(enemy)
             break
