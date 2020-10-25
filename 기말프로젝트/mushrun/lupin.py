@@ -90,7 +90,7 @@ class Lupin:
             gfw.world.remove(self)
 
     def throw_banana(self):
-        banana = Banana(self.x - 30, self.y)
+        banana = Banana(self.x - 30, self.y + 10)
         gfw.world.add(gfw.layer.enemy, banana)
 
     def reset_things(self):

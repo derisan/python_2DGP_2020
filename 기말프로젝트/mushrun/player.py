@@ -208,7 +208,7 @@ class Player:
 
     BB_DIFFS = [
         (-25, -33, 25, 33),  # ELSE
-        (-25, -33, 25, 0),  # SLIDING
+        (-25, -33, 25, -15),  # SLIDING
     ]
 
     def __init__(self):
