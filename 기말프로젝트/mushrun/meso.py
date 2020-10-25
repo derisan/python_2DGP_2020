@@ -14,6 +14,8 @@ PATH = [
 
 
 class Meso:
+    BRONZE, GOLD, BILL, SACK = range(4)
+
     def __init__(self, type: int, x, y):
         self.x, self.y = x, y
         self.images = []
@@ -23,6 +25,7 @@ class Meso:
         self.time = 0
         self.frame = 0
         self.FPS = 6
+        self.type = type
 
     def update(self):
         self.time += gfw.delta_time
@@ -42,3 +45,6 @@ class Meso:
         x, y = self.x, self.y
         # print(x - hw, y - hh, x + hw, y + hh)
         return x - hw, y - hh, x + hw, y + hh
+
+    def get_type(self):
+        return self.type

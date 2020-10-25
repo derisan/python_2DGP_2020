@@ -13,6 +13,8 @@ import stage_gen
 canvas_width = 1200
 canvas_height = 610
 
+FONT_SIZE = 50
+
 
 def enter():
     gfw.world.init(['bg', 'enemy', 'platform', 'item', 'player'])
@@ -29,6 +31,9 @@ def enter():
     global player
     player = Player()
     gfw.world.add(gfw.layer.player, player)
+
+    global font
+    font = gfw.font.load(gobj.res('font/Maplestory Bold.ttf'), FONT_SIZE)
 
     stage_gen.load(gobj.res('stage_01.txt'))
 
@@ -55,6 +60,7 @@ def update():
 def check_items():
     for item in gfw.world.objects_at(gfw.layer.item):
         if gobj.collides_box(player, item):
+            player.item_check(item)
             gfw.world.remove(item)
             break
 
@@ -62,6 +68,8 @@ def check_items():
 def draw():
     gfw.world.draw()
     gobj.draw_collision_box()
+
+    font.draw(get_canvas_width() // 2 - FONT_SIZE, get_canvas_height() - FONT_SIZE, str(player.score))
 
 
 def handle_event(evt):

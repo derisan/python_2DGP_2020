@@ -1,3 +1,4 @@
+import random
 from typing import Tuple
 from typing import List
 
@@ -6,6 +7,7 @@ from pico2d import *
 import gfw
 import gobj
 from pet import Pet
+from meso import Meso
 
 
 class RunningState:
@@ -220,6 +222,7 @@ class Player:
         self.set_state(RunningState)
 
         self.bb_idx = 0
+        self.score = 0
 
     def update(self):
         self.state.update()
@@ -286,3 +289,21 @@ class Player:
         x, y = self.pos
         y -= platform.height / 2 + 1
         self.pos = x, y
+
+    def item_check(self, item):
+        if item.get_type() == Meso.BRONZE:
+            self.score += random.randint(1, 49)
+
+        elif item.get_type() == Meso.GOLD:
+            self.score += random.randint(50, 99)
+
+        elif item.get_type() == Meso.BILL:
+            self.score += random.randint(100, 999)
+
+        elif item.get_type() == Meso.SACK:
+            self.score += random.randint(1000, 4999)
+
+    def get_score(self):
+        return self.score
+
+
