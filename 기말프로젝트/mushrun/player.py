@@ -197,6 +197,10 @@ class SlidingState:
         pass
 
 
+class DeadState:
+    pass
+
+
 class Player:
     KEYDOWN_C = (SDL_KEYDOWN, SDLK_c)
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
@@ -306,5 +310,8 @@ class Player:
     @score.setter
     def score(self, score):
         self.__score = score
+
+    def die(self):
+        self.set_state(DeadState)
 
 

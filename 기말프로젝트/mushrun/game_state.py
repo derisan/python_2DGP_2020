@@ -73,11 +73,13 @@ def check_items():
 
 
 def check_enemy():
-    global lg
+    global lg, player
     for enemy in gfw.world.objects_at(gfw.layer.enemy):
         if gobj.collides_box(player, enemy):
             # Decrease player's hp
             lg.decrease_hp()
+            if lg.hp == 0:
+                player.die()
             # Invincible for a moment after collision
             gfw.world.remove(enemy)
             break

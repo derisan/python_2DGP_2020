@@ -78,9 +78,17 @@ class LifeGauge:
         pass
 
     def decrease_hp(self):
+        if self.hp == 0:
+            return
+
         if self.hp > 0:
             self.hp -= 1
 
-        if self.hp == 0:
-            # you die
-            pass
+    @property
+    def hp(self):
+        return self.__hp
+
+    @hp.setter
+    def hp(self, hp):
+        self.__hp = hp
+
