@@ -8,7 +8,7 @@ import gobj
 
 UNIT_PER_LINE = 100
 SCREEN_LINES = 10
-BLOCK_SIZE = 30
+BLOCK_SIZE = 60
 
 lines = []
 
@@ -50,7 +50,7 @@ def create_object(ch, x, y):
         gfw.world.add(gfw.layer.item, obj)
         # print('creating Jelly', x, y)
     elif ch in ['O', 'P', 'Q']:
-        dy = 1 if ch == 'Q' else 3.8
+        dy = 3.8 if ch == 'O' else 1
         y -= int(dy * BLOCK_SIZE) // 2
         x -= BLOCK_SIZE // 2
         obj = Platform(ord(ch) - ord('O'), x, y)

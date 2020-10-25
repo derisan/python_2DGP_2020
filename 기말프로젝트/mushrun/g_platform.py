@@ -1,22 +1,23 @@
 import gfw
 import gobj
 
+UNIT = 60
 INFO = [
-    (600, 80, 'platform/long_platform.png'),
-    (100, 50, 'platform/medium_platform.png'),
-    (50, 50, 'platform/small_platform.png')
+    (10 * UNIT, 2 * UNIT, 'platform/long_platform.png'),
+    (2 * UNIT, 1 * UNIT, 'platform/medium_platform.png'),
+    (1 * UNIT, 1 * UNIT, 'platform/small_platform.png')
 ]
 
 
 class Platform:
-    Floor, Short, Long = range(3)
+    Floor, Long, Short = range(3)
 
     def __init__(self, type, left, bottom):
         self.left = left
         self.bottom = bottom
         self.width, self.height, fn = INFO[type]
         self.image = gfw.image.load(gobj.res(fn))
-        self.can_pass = type >= Platform.Short
+        self.can_pass = type >= Platform.Long
 
     def update(self):
         pass

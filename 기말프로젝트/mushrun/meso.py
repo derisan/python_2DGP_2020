@@ -3,7 +3,7 @@ import random
 import gfw
 import gobj
 
-MESO_SIZE = 15
+MESO_SIZE = 60
 
 PATH = [
     'coins/bronze/Frame',
@@ -29,7 +29,7 @@ class Meso:
         self.frame = round(self.time * self.FPS) % len(self.images)
 
     def draw(self):
-        self.images[self.frame].draw(self.x, self.y)
+        self.images[self.frame].draw(self.x, self.y, w=MESO_SIZE, h=MESO_SIZE)
 
     def move(self, dx):
         self.x += dx
@@ -37,8 +37,8 @@ class Meso:
             gfw.world.remove(self)
 
     def get_bb(self):
-        hw = MESO_SIZE
-        hh = MESO_SIZE
+        hw = MESO_SIZE // 2
+        hh = MESO_SIZE // 2
         x, y = self.x, self.y
         # print(x - hw, y - hh, x + hw, y + hh)
         return x - hw, y - hh, x + hw, y + hh
