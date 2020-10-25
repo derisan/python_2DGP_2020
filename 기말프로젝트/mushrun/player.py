@@ -303,7 +303,12 @@ class Player:
         elif item.get_type() == Meso.SACK:
             self.score += random.randint(1000, 4999)
 
-    def get_score(self):
-        return self.score
+    @property
+    def score(self):
+        return self.__score
+
+    @score.setter
+    def score(self, score):
+        self.__score = score
 
 
