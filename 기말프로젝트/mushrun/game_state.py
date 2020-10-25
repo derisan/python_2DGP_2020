@@ -53,6 +53,7 @@ def update():
             obj.move(dx)
 
     check_items()
+    check_enemy()
 
     stage_gen.update(dx)
 
@@ -62,6 +63,15 @@ def check_items():
         if gobj.collides_box(player, item):
             player.item_check(item)
             gfw.world.remove(item)
+            break
+
+
+def check_enemy():
+    for enemy in gfw.world.objects_at(gfw.layer.enemy):
+        if gobj.collides_box(player, enemy):
+            # Decrease player's hp
+            # Invincible for a moment after collision
+            gfw.world.remove(enemy)
             break
 
 

@@ -248,13 +248,9 @@ class Player:
         self.state.enter()
 
     def jump(self):
-        # if self.state == JumpState or self.state == SlidingState:
-        #     return
         self.set_state(JumpState)
 
     def slide(self):
-        # if self.state == JumpState or self.state == FallingState:
-        #     return
         self.set_state(SlidingState)
 
     def move(self, diff: Tuple):
