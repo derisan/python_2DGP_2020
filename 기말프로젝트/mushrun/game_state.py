@@ -39,7 +39,7 @@ def enter():
 
     stage_gen.load(gobj.res('stage_01.txt'))
 
-    lg = LifeGauge(10, get_canvas_height() - 50)
+    lg = LifeGauge(10, 10)
     gfw.world.add(gfw.layer.ui, lg)
 
 

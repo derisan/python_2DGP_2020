@@ -23,7 +23,7 @@ class LifeGauge:
         """
         self.images = [[] for _ in range(3 + 1)]
 
-        self.images[LifeGauge.BG].append(gfw.image.load(gobj.res('tags/bar3.png')))
+        self.images[LifeGauge.BG].append(gfw.image.load(gobj.res('tags/bar.png')))
 
         for i in range(2 + 1):
             self.images[LifeGauge.HP].append(gfw.image.load(gobj.res('tags/hp/hp' + str(i) + '.png')))
