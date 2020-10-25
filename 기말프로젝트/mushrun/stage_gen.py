@@ -11,7 +11,7 @@ SCREEN_LINES = 10
 BLOCK_SIZE = 60
 
 lines = []
-
+my_row = 0
 
 def load(file: str):
     global lines, current_x, create_at, map_index
@@ -37,9 +37,12 @@ def create_column():
     global current_x, map_index
     y = BLOCK_SIZE // 2
     for row in range(SCREEN_LINES):
+        global my_row
+        my_row = row
         ch = get(map_index, row)
         create_object(ch, current_x, y)
         y += BLOCK_SIZE
+
     current_x += BLOCK_SIZE
     map_index += 1
 
@@ -56,8 +59,14 @@ def create_object(ch, x, y):
         obj = Platform(ord(ch) - ord('O'), x, y)
         gfw.world.add(gfw.layer.platform, obj)
         # print('creating Platform', x, y)
+
+    # 루팡이 1 행에서 생성될 때와 나머지 행에서 생성될 때 y위치 값이 다르다
     elif ch in ['X']:
-        obj = Lupin(x, y - 45)
+        if my_row == 2:
+            y -= int(BLOCK_SIZE) // 2
+        else:
+            y -= 8
+        obj = Lupin(x, y)
         gfw.world.add(gfw.layer.enemy, obj)
 
 

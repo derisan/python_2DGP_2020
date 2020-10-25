@@ -43,7 +43,7 @@ class Lupin:
     RUN, THROW, DEAD = range(3)
     images = None
     COOLDOWN = 2
-    SIZE = 30
+    SIZE = 60
 
     def __init__(self, x, y):
         self.x, self.y = x, y
@@ -82,7 +82,7 @@ class Lupin:
         self.frame = round(self.time * self.FPS) % len(self.images[self.state])
 
     def draw(self):
-        self.images[self.state][self.frame].draw(self.x, self.y)
+        self.images[self.state][self.frame].draw(self.x, self.y, w=Lupin.SIZE, h=Lupin.SIZE)
 
     def move(self, dx):
         self.x += dx
@@ -99,8 +99,8 @@ class Lupin:
         self.frame = 0
 
     def get_bb(self):
-        hw = Lupin.SIZE
-        hh = Lupin.SIZE
+        hw = Lupin.SIZE // 2
+        hh = Lupin.SIZE // 2
         x, y = self.x, self.y
         # print(x - hw, y - hh, x + hw, y + hh)
         return x - hw, y - hh, x + hw, y + hh
