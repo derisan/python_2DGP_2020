@@ -8,6 +8,8 @@ from background import Background
 from g_platform import Platform
 from player import Player
 from meso import Meso
+from life_gauge import LifeGauge
+
 import stage_gen
 
 canvas_width = 1200
@@ -17,7 +19,7 @@ FONT_SIZE = 50
 
 
 def enter():
-    gfw.world.init(['bg', 'enemy', 'platform', 'item', 'player'])
+    gfw.world.init(['bg', 'enemy', 'platform', 'item', 'player', 'ui'])
 
     bg = Background('background/stage1_bg_far.png')
     bg.speed = 10
@@ -36,6 +38,9 @@ def enter():
     font = gfw.font.load(gobj.res('font/Maplestory Bold.ttf'), FONT_SIZE)
 
     stage_gen.load(gobj.res('stage_01.txt'))
+
+    lg = LifeGauge(10, get_canvas_height() - 50)
+    gfw.world.add(gfw.layer.ui, lg)
 
 
 paused = False
