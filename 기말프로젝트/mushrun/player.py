@@ -289,13 +289,14 @@ class AttackState:
         self.frame = 0
         self.target = self.player.find_nearest_enemy()
         if self.target is None:
-            self.exit()
+            self.player.set_state(RunningState)
 
     def exit(self):
         pass
 
     def draw(self):
         self.images[self.frame].draw(*self.player.pos)
+        self.claw_images[self.frame].draw(self.target.x, self.target.y)
 
     def update(self):
         self.time += gfw.delta_time
@@ -460,7 +461,7 @@ class Player:
         e = (sys.maxsize, None)
         for enemy in gfw.world.objects_at(gfw.layer.enemy):
             d = gobj.distance_sq(self.pos, (enemy.x, enemy.y))
-            if e[0] > d:
+            if e[0] > d and self.pos[0] < enemy.x:
                 e = (d, enemy)
 
         if e[1] is not None:
