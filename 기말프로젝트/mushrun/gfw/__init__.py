@@ -52,7 +52,7 @@ def run(state):
         stack[-1].draw()
         update_canvas()
 
-        # delay(frame_interval)
+        delay(frame_interval)
 
     while len(stack) > 0:
         stack[-1].exit()

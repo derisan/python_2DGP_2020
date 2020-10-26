@@ -1,16 +1,10 @@
-import random
-
 from pico2d import *
 
 import gfw
 import gobj
-from background import Background
-from g_platform import Platform
-from player import Player
-from meso import Meso
-from life_gauge import LifeGauge
-
 import stage_gen
+from background import Background
+from player import Player
 
 canvas_width = 1200
 canvas_height = 610
@@ -75,9 +69,6 @@ def check_enemy():
         if gobj.collides_box(player, enemy):
             # Decrease player's hp
             player.decrease_hp()
-            if player.is_dead():
-                player.die()
-                paused = True
             # Invincible for a moment after collision
             gfw.world.remove(enemy)
             break

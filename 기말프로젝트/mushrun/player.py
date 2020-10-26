@@ -49,6 +49,9 @@ class RunningState:
             if foot > t:
                 self.player.set_state(FallingState)
 
+        if self.player.is_dead():
+            self.player.die()
+
     def handle_event(self, evt):
         pair = evt.type, evt.key
         if pair == Player.KEYDOWN_C:
@@ -103,6 +106,9 @@ class JumpState:
                 self.player.move((0, t - foot))
                 self.player.set_state(RunningState)
 
+        if self.player.is_dead():
+            self.player.die()
+
     def handle_event(self, evt):
         key_state = SDL_GetKeyboardState(None)
         if key_state[SDL_SCANCODE_C]:
@@ -147,6 +153,9 @@ class FallingState:
             if self.jump_speed < 0 and int(foot) <= t:
                 self.player.move((0, t - foot))
                 self.player.set_state(RunningState)
+
+        if self.player.is_dead():
+            self.player.die()
 
     def handle_event(self, evt):
         pass
@@ -194,35 +203,58 @@ class SlidingState:
             if foot > t:
                 self.player.set_state(FallingState)
 
+        if self.player.is_dead():
+            self.player.die()
+
     def handle_event(self, evt):
         pass
 
 
 class DeadState:
+    FALLING, LANDING = range(2)
+
     @staticmethod
     def get(player):
         if not hasattr(DeadState, 'singleton'):
             DeadState.singleton = DeadState()
             DeadState.singleton.player = player
-            DeadState.singleton.images = []
-            DeadState.singleton.images.append(gfw.image.load(gobj.res('tags/tomb.png')))
+            DeadState.singleton.images = [[] for _ in range(2)]
+            for i in range(11 + 1):
+                DeadState.singleton.images[DeadState.FALLING].append(gfw.image.load(gobj.res('tombstone/fall/Frame' +
+                                                                                             str(i) + '.png')))
+
+            DeadState.singleton.images[DeadState.LANDING].append(gfw.image.load(gobj.res('tombstone/land/Frame0.png')))
 
         return DeadState.singleton
 
     def __init__(self):
+        self.time = 0
         self.frame = 0
+        self.FPS = 10
+        self.speed = 400
+        self.option = DeadState.FALLING
 
     def enter(self):
-        self.frame = 0
+        self.x, self.y = self.player.pos[0], get_canvas_height()
+        self.time = 0
 
     def exit(self):
         pass
 
     def draw(self):
-        self.images[self.frame].draw(self.player.pos[0], self.player.pos[1] - 15)
+        self.images[self.option][self.frame].draw(self.x, self.y)
 
     def update(self):
-        pass
+        self.time += gfw.delta_time
+        self.frame = round(self.time * self.FPS) % len(self.images[self.option])
+
+        self.x = self.player.pos[0]
+        self.y -= self.speed * gfw.delta_time
+
+        if self.y < 105:
+            self.option = DeadState.LANDING
+            self.y = 105
+            self.frame = 0
 
     def handle_event(self, evt):
         pass
@@ -262,6 +294,9 @@ class Player:
         self.state.update()
         self.pet.know_pos(self.pos)
 
+        # if self.is_dead():
+        #     self.die()
+
     def draw(self):
         self.state.draw()
 
@@ -286,6 +321,10 @@ class Player:
 
     def slide(self):
         self.set_state(SlidingState)
+
+    def die(self):
+        if self.state is not DeadState:
+            self.set_state(DeadState)
 
     def move(self, diff: Tuple):
         self.pos = gobj.point_add(self.pos, diff)
@@ -340,9 +379,6 @@ class Player:
     @score.setter
     def score(self, score):
         self.__score = score
-
-    def die(self):
-        self.set_state(DeadState)
 
     def is_dead(self):
         return self.life_gauge.hp == 0

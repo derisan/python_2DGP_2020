@@ -13,6 +13,7 @@ BLOCK_SIZE = 60
 lines = []
 my_row = 0
 
+
 def load(file: str):
     global lines, current_x, create_at, map_index
     with open(file, 'r') as f:
