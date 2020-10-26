@@ -31,6 +31,9 @@ def enter():
     global font
     font = gfw.font.load(gobj.res('font/Maplestory Bold.ttf'), FONT_SIZE)
 
+    global font_meso
+    font_meso = gfw.font.load(gobj.res('font/morris9.ttf'), 20)
+
     stage_gen.load(gobj.res('stage_01.txt'))
 
 
@@ -79,6 +82,8 @@ def draw():
     gobj.draw_collision_box()
 
     font.draw(get_canvas_width() // 2 - FONT_SIZE, get_canvas_height() - FONT_SIZE, str(player.score))
+    if player.ea_score > 0:
+        font_meso.draw(get_canvas_width() - 300, get_canvas_height() - 50, f'메소를 얻었습니다 (+{player.ea_score})')
 
 
 def handle_event(evt):

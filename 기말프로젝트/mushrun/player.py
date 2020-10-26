@@ -286,6 +286,8 @@ class Player:
 
         self.bb_idx = 0
         self.score = 0
+        # each meso's score
+        self.ea_score = 0
 
         self.life_gauge = LifeGauge(10, 10)
         gfw.world.add(gfw.layer.ui, self.life_gauge)
@@ -360,17 +362,24 @@ class Player:
         self.pos = x, y
 
     def item_check(self, item):
+        """
+        Add value to score.
+        ea_score is used to print '메소를 얻었습니다'
+        """
+        self.ea_score = 0
         if item.get_type() == Meso.BRONZE:
-            self.score += random.randint(1, 49)
+            self.ea_score = random.randint(1, 49)
 
         elif item.get_type() == Meso.GOLD:
-            self.score += random.randint(50, 99)
+            self.ea_score = random.randint(50, 99)
 
         elif item.get_type() == Meso.BILL:
-            self.score += random.randint(100, 999)
+            self.ea_score = random.randint(100, 999)
 
         elif item.get_type() == Meso.SACK:
-            self.score += random.randint(1000, 4999)
+            self.ea_score = random.randint(1000, 4999)
+
+        self.score += self.ea_score
 
     @property
     def score(self):
