@@ -449,9 +449,9 @@ class Player:
     def item_check(self, item):
         item_type = item.get_type()
         if item_type == Potion.HP:
-            pass
+            self.increase_hp()
         elif item_type == Potion.MP:
-            pass
+            self.increase_mp()
 
     @property
     def score(self):
@@ -469,8 +469,16 @@ class Player:
             return
         self.life_gauge.decrease_hp()
 
+    def increase_hp(self):
+        if self.life_gauge.hp < 10:
+            self.life_gauge.hp += 1
+
     def decrease_mp(self):
         self.life_gauge.decrease_mp()
+
+    def increase_mp(self):
+        if self.life_gauge.mp < 10:
+            self.life_gauge.mp += 1
 
     def make_invincible(self, sec):
         if self.invincible <= 0:
