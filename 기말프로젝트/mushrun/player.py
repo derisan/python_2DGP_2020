@@ -292,10 +292,11 @@ class AttackState:
         self.target = self.player.find_nearest_enemy()
         if self.target is None:
             self.player.set_state(RunningState)
-
-    def exit(self):
         if self.target is not None:
             self.target.die()
+
+    def exit(self):
+        pass
 
     def draw(self):
         self.images[self.char_frame].draw(*self.player.pos)
@@ -459,6 +460,9 @@ class Player:
         if self.invincible > 0:
             return
         self.life_gauge.decrease_hp()
+
+    def decrease_mp(self):
+        self.life_gauge.decrease_mp()
 
     def make_invincible(self, sec):
         if self.invincible <= 0:
