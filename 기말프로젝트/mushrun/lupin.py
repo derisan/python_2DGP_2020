@@ -91,7 +91,7 @@ class Lupin:
 
     def throw_banana(self):
         banana = Banana(self.x - 30, self.y - 10)
-        gfw.world.add(gfw.layer.enemy, banana)
+        gfw.world.add(gfw.layer.throwing, banana)
 
     def reset_things(self):
         self.cooldown = random.randint(1, 3)

@@ -13,7 +13,7 @@ FONT_SIZE = 50
 
 
 def enter():
-    gfw.world.init(['bg', 'enemy', 'platform', 'item', 'player', 'ui'])
+    gfw.world.init(['bg', 'enemy', 'throwing', 'platform', 'item', 'player', 'ui'])
 
     bg = Background('background/stage1_bg_far.png')
     bg.speed = 10
@@ -67,14 +67,15 @@ def check_items():
 
 
 def check_enemy():
-    global player, paused
-    for enemy in gfw.world.objects_at(gfw.layer.enemy):
-        if gobj.collides_box(player, enemy):
-            # Decrease player's hp
-            player.decrease_hp()
-            # Invincible for a moment after collision
-            gfw.world.remove(enemy)
-            break
+    global player
+
+    for layer in range(gfw.layer.enemy, gfw.layer.throwing + 1):
+        for obj in gfw.world.objects_at(layer):
+            if gobj.collides_box(player, obj):
+                player.decrease_hp()
+                # Invincible for a moment after collision
+                gfw.world.remove(obj)
+                break
 
 
 def draw():
