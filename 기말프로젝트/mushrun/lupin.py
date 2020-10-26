@@ -41,7 +41,7 @@ class Banana:
 
 
 class Lupin:
-    RUN, THROW, DEAD = range(3)
+    IDLE, THROW, DEAD = range(3)
     images = None
     SIZE = 60
 
@@ -52,13 +52,12 @@ class Lupin:
         self.time = 0
         self.cooldown = random.randint(1, 3)
         self.frame = 0
-        self.state = Lupin.RUN
+        self.state = Lupin.IDLE
 
         if Lupin.images is None:
             Lupin.images = [[] for _ in range(3)]
-            for i in range(2 + 1):
-                Lupin.images[Lupin.RUN].append(gfw.image.load(gobj.res('monsters/lupin/running/Frame' + str(i) +
-                                                                       '.png')))
+            Lupin.images[Lupin.IDLE].append(gfw.image.load(gobj.res('monsters/lupin/idle/Frame0.png')))
+
             for i in range(9 + 1):
                 Lupin.images[Lupin.THROW].append(gfw.image.load(gobj.res('monsters/lupin/throw/Frame' + str(i) +
                                                                          '.png')))
@@ -71,15 +70,15 @@ class Lupin:
         self.time += gfw.delta_time
         self.cooldown -= gfw.delta_time
 
-        if self.cooldown < 0 and self.state == Lupin.RUN:
+        if self.cooldown < 0 and self.state == Lupin.IDLE:
             self.state = Lupin.THROW
             self.throw_banana()
 
-        if self.state == Lupin.THROW and self.frame >= 9:
-            self.state = Lupin.RUN
+        if self.state == Lupin.THROW and self.frame >= len(self.images[self.state]) - 1:
+            self.state = Lupin.IDLE
             self.reset_things()
 
-        if self.state == Lupin.DEAD and self.frame >= 2:
+        if self.state == Lupin.DEAD and self.frame >= len(self.images[self.state]) - 1:
             gfw.world.remove(self)
 
         self.frame = round(self.time * self.FPS) % len(self.images[self.state])
@@ -110,3 +109,4 @@ class Lupin:
     def die(self):
         self.state = Lupin.DEAD
         self.reset_things()
+        # self.drop_item()
