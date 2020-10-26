@@ -467,14 +467,16 @@ class Player:
     def decrease_hp(self):
         if self.invincible > 0:
             return
-        self.life_gauge.decrease_hp()
+        if self.life_gauge.hp > 0:
+            self.life_gauge.hp -= 1
 
     def increase_hp(self):
         if self.life_gauge.hp < 10:
             self.life_gauge.hp += 1
 
     def decrease_mp(self):
-        self.life_gauge.decrease_mp()
+        if self.life_gauge.mp > 0:
+            self.life_gauge.mp -= 1
 
     def increase_mp(self):
         if self.life_gauge.mp < 10:
