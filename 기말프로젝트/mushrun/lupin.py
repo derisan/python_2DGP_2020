@@ -43,7 +43,6 @@ class Banana:
 class Lupin:
     RUN, THROW, DEAD = range(3)
     images = None
-    COOLDOWN = 1
     SIZE = 60
 
     def __init__(self, x, y):
@@ -51,7 +50,7 @@ class Lupin:
 
         self.FPS = 10
         self.time = 0
-        self.cooldown = Lupin.COOLDOWN
+        self.cooldown = random.randint(1, 3)
         self.frame = 0
         self.state = Lupin.RUN
 
@@ -95,7 +94,7 @@ class Lupin:
         gfw.world.add(gfw.layer.enemy, banana)
 
     def reset_things(self):
-        self.cooldown = Lupin.COOLDOWN
+        self.cooldown = random.randint(1, 3)
         self.time = 0
         self.frame = 0
 
