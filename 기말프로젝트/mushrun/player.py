@@ -427,31 +427,31 @@ class Player:
         y -= platform.height / 2 + 1
         self.pos = x, y
 
-    def item_check(self, item):
+    def meso_check(self, meso):
         """
         Add value to score.
         ea_score is used to print '메소를 얻었습니다'
         """
         self.ea_score = 0
-        if item.get_type() == Meso.BRONZE:
+        if meso.get_type() == Meso.BRONZE:
             self.ea_score = random.randint(1, 49)
 
-        elif item.get_type() == Meso.GOLD:
+        elif meso.get_type() == Meso.GOLD:
             self.ea_score = random.randint(50, 99)
 
-        elif item.get_type() == Meso.BILL:
+        elif meso.get_type() == Meso.BILL:
             self.ea_score = random.randint(100, 999)
 
-        elif item.get_type() == Meso.SACK:
+        elif meso.get_type() == Meso.SACK:
             self.ea_score = random.randint(1000, 4999)
-
-        elif item.get_type() == Potion.HP:
-            pass
-
-        elif item.get_type() == Potion.MP:
-            pass
-
         self.score += self.ea_score
+
+    def item_check(self, item):
+        item_type = item.get_type()
+        if item_type == Potion.HP:
+            pass
+        elif item_type == Potion.MP:
+            pass
 
     @property
     def score(self):
