@@ -294,7 +294,8 @@ class AttackState:
             self.player.set_state(RunningState)
 
     def exit(self):
-        pass
+        if self.target is not None:
+            self.target.die()
 
     def draw(self):
         self.images[self.char_frame].draw(*self.player.pos)

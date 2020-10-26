@@ -64,7 +64,7 @@ class Lupin:
                                                                          '.png')))
 
             for i in range(2 + 1):
-                Lupin.images[Lupin.DEAD].append(gfw.image.load(gobj.res('monsters/lupin/running/Frame' + str(i) +
+                Lupin.images[Lupin.DEAD].append(gfw.image.load(gobj.res('monsters/lupin/dead/Frame' + str(i) +
                                                                         '.png')))
 
     def update(self):
@@ -78,6 +78,9 @@ class Lupin:
         if self.state == Lupin.THROW and self.frame >= 9:
             self.state = Lupin.RUN
             self.reset_things()
+
+        if self.state == Lupin.DEAD and self.frame >= 2:
+            gfw.world.remove(self)
 
         self.frame = round(self.time * self.FPS) % len(self.images[self.state])
 
@@ -103,3 +106,7 @@ class Lupin:
         hh = Lupin.SIZE // 2
         x, y = self.x, self.y
         return x - hw, y - hh, x + hw, y + hh
+
+    def die(self):
+        self.state = Lupin.DEAD
+        self.reset_things()
