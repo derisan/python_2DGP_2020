@@ -73,8 +73,7 @@ def check_enemy():
         for obj in gfw.world.objects_at(layer):
             if gobj.collides_box(player, obj):
                 player.decrease_hp()
-                # Invincible for a moment after collision
-                gfw.world.remove(obj)
+                player.make_invincible(1)
                 break
 
 

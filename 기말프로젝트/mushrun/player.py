@@ -288,6 +288,7 @@ class Player:
         self.score = 0
         # each meso's score
         self.ea_score = 0
+        self.invincible = 0
 
         self.life_gauge = LifeGauge(10, 10)
         gfw.world.add(gfw.layer.ui, self.life_gauge)
@@ -296,8 +297,12 @@ class Player:
         self.state.update()
         self.pet.know_pos(self.pos)
 
-        # if self.is_dead():
-        #     self.die()
+        if self.invincible > 0:
+            self.invincible -= gfw.delta_time
+        else:
+            self.invincible = 0
+
+        print(self.invincible)
 
     def draw(self):
         self.state.draw()
@@ -393,4 +398,10 @@ class Player:
         return self.life_gauge.hp == 0
 
     def decrease_hp(self):
+        if self.invincible > 0:
+            return
         self.life_gauge.decrease_hp()
+
+    def make_invincible(self, sec):
+        if self.invincible <= 0:
+            self.invincible = sec
