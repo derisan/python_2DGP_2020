@@ -2,6 +2,7 @@ from pico2d import *
 from g_platform import Platform
 from meso import Meso
 from lupin import Lupin
+from potion import Potion
 
 import gfw
 import gobj
@@ -69,6 +70,10 @@ def create_object(ch, x, y):
             y -= 8
         obj = Lupin(x, y)
         gfw.world.add(gfw.layer.enemy, obj)
+
+    elif ch in ['A', 'B']:
+        obj = Potion(ord(ch) - ord('A'), x, y)
+        gfw.world.add(gfw.layer.item, obj)
 
 
 def get(x, y):

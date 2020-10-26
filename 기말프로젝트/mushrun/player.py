@@ -9,6 +9,7 @@ import gobj
 from life_gauge import LifeGauge
 from meso import Meso
 from pet import Pet
+from potion import Potion
 
 
 class RunningState:
@@ -443,6 +444,12 @@ class Player:
 
         elif item.get_type() == Meso.SACK:
             self.ea_score = random.randint(1000, 4999)
+
+        elif item.get_type() == Potion.HP:
+            pass
+
+        elif item.get_type() == Potion.MP:
+            pass
 
         self.score += self.ea_score
 
