@@ -279,14 +279,16 @@ class AttackState:
         return AttackState.singleton
 
     def __init__(self):
-        self.FPS = 4
+        self.FPS = 10
         self.time = 0
-        self.frame = 0
+        self.char_frame = 0
+        self.claw_frame = 0
         self.target = None
 
     def enter(self):
         self.time = 0
-        self.frame = 0
+        self.char_frame = 0
+        self.claw_frame = 0
         self.target = self.player.find_nearest_enemy()
         if self.target is None:
             self.player.set_state(RunningState)
@@ -295,14 +297,18 @@ class AttackState:
         pass
 
     def draw(self):
-        self.images[self.frame].draw(*self.player.pos)
-        self.claw_images[self.frame].draw(self.target.x, self.target.y)
+        self.images[self.char_frame].draw(*self.player.pos)
+        self.claw_images[self.claw_frame].draw(self.target.x, self.target.y)
 
     def update(self):
         self.time += gfw.delta_time
-        self.frame = round(self.time * self.FPS)
+        self.char_frame = round(self.time * self.FPS)
+        self.claw_frame = round(self.time * self.FPS)
 
-        if self.frame >= len(self.images):
+        if self.char_frame >= len(self.images):
+            self.char_frame = len(self.images) - 1
+
+        if self.claw_frame >= len(self.claw_images):
             self.player.set_state(RunningState)
 
     def handle_event(self, evt):
