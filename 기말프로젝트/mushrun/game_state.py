@@ -39,15 +39,12 @@ def enter():
 
     stage_gen.load(gobj.res('stage_01.txt'))
 
-    global lg
-    lg = LifeGauge(10, 10)
-    gfw.world.add(gfw.layer.ui, lg)
-
 
 paused = False
 
 
 def update():
+    global paused
     if paused:
         return
 
@@ -73,13 +70,14 @@ def check_items():
 
 
 def check_enemy():
-    global lg, player
+    global player, paused
     for enemy in gfw.world.objects_at(gfw.layer.enemy):
         if gobj.collides_box(player, enemy):
             # Decrease player's hp
-            lg.decrease_hp()
-            if lg.hp == 0:
+            player.decrease_hp()
+            if player.is_dead():
                 player.die()
+                paused = True
             # Invincible for a moment after collision
             gfw.world.remove(enemy)
             break
@@ -110,6 +108,16 @@ def handle_event(evt):
 
 def exit():
     pass
+
+
+def pause():
+    global paused
+    paused = True
+
+
+def resume():
+    global paused
+    paused = False
 
 
 if __name__ == '__main__':

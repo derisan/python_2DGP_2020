@@ -8,6 +8,7 @@ import gfw
 import gobj
 from pet import Pet
 from meso import Meso
+from life_gauge import LifeGauge
 
 
 class RunningState:
@@ -198,7 +199,33 @@ class SlidingState:
 
 
 class DeadState:
-    pass
+    @staticmethod
+    def get(player):
+        if not hasattr(DeadState, 'singleton'):
+            DeadState.singleton = DeadState()
+            DeadState.singleton.player = player
+            DeadState.singleton.images = []
+            DeadState.singleton.images.append(gfw.image.load(gobj.res('tags/tomb.png')))
+
+        return DeadState.singleton
+
+    def __init__(self):
+        self.frame = 0
+
+    def enter(self):
+        self.frame = 0
+
+    def exit(self):
+        pass
+
+    def draw(self):
+        self.images[self.frame].draw(self.player.pos[0], self.player.pos[1] - 15)
+
+    def update(self):
+        pass
+
+    def handle_event(self, evt):
+        pass
 
 
 class Player:
@@ -228,6 +255,9 @@ class Player:
         self.bb_idx = 0
         self.score = 0
 
+        self.life_gauge = LifeGauge(10, 10)
+        gfw.world.add(gfw.layer.ui, self.life_gauge)
+
     def update(self):
         self.state.update()
         self.pet.know_pos(self.pos)
@@ -242,7 +272,7 @@ class Player:
     def get_bb(self):
         l, b, r, t = Player.BB_DIFFS[self.bb_idx]
         x, y = self.pos
-        # print(x - hw, y - hh, x + hw, y + hh)
+
         return x + l, y + b, x + r, y + t
 
     def set_state(self, clazz):
@@ -314,4 +344,8 @@ class Player:
     def die(self):
         self.set_state(DeadState)
 
+    def is_dead(self):
+        return self.life_gauge.hp == 0
 
+    def decrease_hp(self):
+        self.life_gauge.decrease_hp()
