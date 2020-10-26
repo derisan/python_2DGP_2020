@@ -1,5 +1,4 @@
 from typing import Tuple
-from typing import List
 
 from pico2d import *
 
@@ -20,13 +19,13 @@ class RunningState:
         return RunningState.singleton
 
     def __init__(self):
-        self.FPS = 6
+        self.FPS = 10
         self.time = 0
         self.frame = 0
+        self.cooldown = 0
 
     def enter(self):
-        self.time = 0
-        self.frame = 0
+        self.cooldown = Pet.SKILL_COOLDOWN
 
     def exit(self):
         pass
@@ -36,12 +35,14 @@ class RunningState:
 
     def update(self):
         self.time += gfw.delta_time
+        self.cooldown -= gfw.delta_time
         self.frame = round(self.time * self.FPS) % len(self.images)
 
-    def handle_event(self, evt):
-        pair = (evt.type, evt.key)
-        if pair == Pet.KEYDOWN_T:
+        if self.cooldown < 0:
             self.pet.set_state(SkillState)
+
+    def handle_event(self, evt):
+        pass
 
 
 class SkillState:
@@ -56,13 +57,12 @@ class SkillState:
         return SkillState.singleton
 
     def __init__(self):
-        self.FPS = 4
+        self.FPS = 8
         self.time = 0
         self.frame = 0
 
     def enter(self):
         self.time = 0
-        self.frame = 0
 
     def exit(self):
         pass
@@ -71,13 +71,10 @@ class SkillState:
         self.images[self.frame].composite_draw(0, 'h', *self.pet.pos)
 
     def update(self):
-        self.repeat = len(self.images) * 3
         self.time += gfw.delta_time
-        frame = round(self.time * self.FPS)
-        if frame >= self.repeat:
+        self.frame = round(self.time * self.FPS) % len(self.images)
+        if self.time >= Pet.ANIMATION_DURATION:
             self.pet.set_state(RunningState)
-        else:
-            self.frame = frame % 4
 
     def handle_event(self, evt):
         pass
@@ -85,6 +82,8 @@ class SkillState:
 
 class Pet:
     KEYDOWN_T = (SDL_KEYDOWN, SDLK_t)
+    ANIMATION_DURATION = 2.5
+    SKILL_COOLDOWN = 1
 
     def __init__(self, x, y):
         self.pos: Tuple = x - 50, y + 30
