@@ -1,14 +1,14 @@
 import random
+from sys import maxsize
 from typing import Tuple
-from typing import List
 
 from pico2d import *
 
 import gfw
 import gobj
-from pet import Pet
-from meso import Meso
 from life_gauge import LifeGauge
+from meso import Meso
+from pet import Pet
 
 
 class RunningState:
@@ -60,7 +60,7 @@ class RunningState:
             self.player.slide()
         elif pair == Player.KEYDOWN_DOWN:
             self.player.move_down_from_platform()
-        elif pair == Player.KEYDOWN_A:
+        elif pair == Player.KEYDOWN_LCTRL:
             self.player.basic_attack()
 
 
@@ -272,16 +272,24 @@ class AttackState:
             for i in range(2 + 1):
                 AttackState.singleton.images.append(gfw.image.load(gobj.res('player/attack/Frame' + str(i) + '.png')))
 
+            AttackState.singleton.claw_images = []
+            for i in range(4 + 1):
+                AttackState.singleton.claw_images.append(gfw.image.load(gobj.res('skill/magic_claw/Frame' + str(i) +
+                                                                                 '.png')))
         return AttackState.singleton
 
     def __init__(self):
         self.FPS = 4
         self.time = 0
         self.frame = 0
+        self.target = None
 
     def enter(self):
         self.time = 0
         self.frame = 0
+        self.target = self.player.find_nearest_enemy()
+        if self.target is None:
+            self.exit()
 
     def exit(self):
         pass
@@ -302,7 +310,7 @@ class AttackState:
 
 class Player:
     KEYDOWN_C = (SDL_KEYDOWN, SDLK_c)
-    KEYDOWN_A = (SDL_KEYDOWN, SDLK_a)
+    KEYDOWN_LCTRL = (SDL_KEYDOWN, SDLK_LCTRL)
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
     KEYDOWN_DOWN = (SDL_KEYDOWN, SDLK_DOWN)
 
@@ -447,3 +455,15 @@ class Player:
     def make_invincible(self, sec):
         if self.invincible <= 0:
             self.invincible = sec
+
+    def find_nearest_enemy(self):
+        e = (sys.maxsize, None)
+        for enemy in gfw.world.objects_at(gfw.layer.enemy):
+            d = gobj.distance_sq(self.pos, (enemy.x, enemy.y))
+            if e[0] > d:
+                e = (d, enemy)
+
+        if e[1] is not None:
+            return e[1]
+        else:
+            return None
