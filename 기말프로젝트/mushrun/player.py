@@ -290,13 +290,14 @@ class AttackState:
         self.char_frame = 0
         self.claw_frame = 0
         self.target = self.player.find_nearest_enemy()
-        if self.target is None:
+        if self.target is None or self.player.life_gauge.mp < 1:
             self.player.set_state(RunningState)
-        if self.target is not None:
+        elif self.target is not None:
             self.target.die()
+            self.player.decrease_mp()
 
     def exit(self):
-        pass
+        self.target = None
 
     def draw(self):
         self.images[self.char_frame].draw(*self.player.pos)

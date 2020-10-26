@@ -80,9 +80,12 @@ class LifeGauge:
     def decrease_hp(self):
         if self.hp == 0:
             return
+        self.hp -= 1
 
-        if self.hp > 0:
-            self.hp -= 1
+    def decrease_mp(self):
+        if self.mp == 0:
+            return
+        self.mp -= 1
 
     @property
     def hp(self):
@@ -91,4 +94,12 @@ class LifeGauge:
     @hp.setter
     def hp(self, hp):
         self.__hp = hp
+
+    @property
+    def mp(self):
+        return self.__mp
+
+    @mp.setter
+    def mp(self, mp):
+        self.__mp = mp
 
