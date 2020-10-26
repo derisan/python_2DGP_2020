@@ -60,6 +60,8 @@ class RunningState:
             self.player.slide()
         elif pair == Player.KEYDOWN_DOWN:
             self.player.move_down_from_platform()
+        elif pair == Player.KEYDOWN_A:
+            self.player.basic_attack()
 
 
 class JumpState:
@@ -260,8 +262,47 @@ class DeadState:
         pass
 
 
+class AttackState:
+    @staticmethod
+    def get(player):
+        if not hasattr(AttackState, 'singleton'):
+            AttackState.singleton = AttackState()
+            AttackState.singleton.player = player
+            AttackState.singleton.images = []
+            for i in range(2 + 1):
+                AttackState.singleton.images.append(gfw.image.load(gobj.res('player/attack/Frame' + str(i) + '.png')))
+
+        return AttackState.singleton
+
+    def __init__(self):
+        self.FPS = 4
+        self.time = 0
+        self.frame = 0
+
+    def enter(self):
+        self.time = 0
+        self.frame = 0
+
+    def exit(self):
+        pass
+
+    def draw(self):
+        self.images[self.frame].draw(*self.player.pos)
+
+    def update(self):
+        self.time += gfw.delta_time
+        self.frame = round(self.time * self.FPS)
+
+        if self.frame >= len(self.images):
+            self.player.set_state(RunningState)
+
+    def handle_event(self, evt):
+        pass
+
+
 class Player:
     KEYDOWN_C = (SDL_KEYDOWN, SDLK_c)
+    KEYDOWN_A = (SDL_KEYDOWN, SDLK_a)
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
     KEYDOWN_DOWN = (SDL_KEYDOWN, SDLK_DOWN)
 
@@ -302,8 +343,6 @@ class Player:
         else:
             self.invincible = 0
 
-        print(self.invincible)
-
     def draw(self):
         self.state.draw()
 
@@ -332,6 +371,9 @@ class Player:
     def die(self):
         if self.state is not DeadState:
             self.set_state(DeadState)
+
+    def basic_attack(self):
+        self.set_state(AttackState)
 
     def move(self, diff: Tuple):
         self.pos = gobj.point_add(self.pos, diff)

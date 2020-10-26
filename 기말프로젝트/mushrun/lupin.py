@@ -102,5 +102,4 @@ class Lupin:
         hw = Lupin.SIZE // 2
         hh = Lupin.SIZE // 2
         x, y = self.x, self.y
-        # print(x - hw, y - hh, x + hw, y + hh)
         return x - hw, y - hh, x + hw, y + hh
