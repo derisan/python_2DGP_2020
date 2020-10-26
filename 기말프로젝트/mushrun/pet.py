@@ -63,6 +63,7 @@ class SkillState:
 
     def enter(self):
         self.time = 0
+        self.pet.owner.increase_hp()
 
     def exit(self):
         pass
@@ -85,9 +86,9 @@ class Pet:
     ANIMATION_DURATION = 2.5
     SKILL_COOLDOWN = 1
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, owner):
         self.pos: Tuple = x - 50, y + 30
-        self.delta: Tuple = 0, 0
+        self.owner = owner
         self.state = None
         self.set_state(RunningState)
 

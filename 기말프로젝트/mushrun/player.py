@@ -338,7 +338,7 @@ class Player:
         self.pos: Tuple = 150, get_canvas_height() // 2
         self.delta: Tuple = 0, 0
 
-        self.pet = Pet(*self.pos)
+        self.pet = Pet(*self.pos, self)
         gfw.world.add(gfw.layer.player, self.pet)
 
         self.state = None
