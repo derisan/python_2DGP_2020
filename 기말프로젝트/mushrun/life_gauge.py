@@ -78,12 +78,12 @@ class LifeGauge:
         pass
 
     def decrease_hp(self):
-        if self.hp == 0:
+        if self.hp <= 0:
             return
         self.hp -= 1
 
     def decrease_mp(self):
-        if self.mp == 0:
+        if self.mp <= 0:
             return
         self.mp -= 1
 

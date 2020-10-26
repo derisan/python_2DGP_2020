@@ -471,12 +471,13 @@ class Player:
 
     def find_nearest_enemy(self):
         e = (sys.maxsize, None)
+        max_attack_range = 160000
         for enemy in gfw.world.objects_at(gfw.layer.enemy):
             d = gobj.distance_sq(self.pos, (enemy.x, enemy.y))
             if e[0] > d and self.pos[0] < enemy.x:
                 e = (d, enemy)
 
-        if e[1] is not None:
+        if e[1] is not None and e[0] < max_attack_range:
             return e[1]
         else:
             return None
