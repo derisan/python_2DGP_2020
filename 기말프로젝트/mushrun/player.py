@@ -338,7 +338,7 @@ class Player:
         self.pos: Tuple = 150, get_canvas_height() // 2
         self.delta: Tuple = 0, 0
 
-        self.pet = Pet(*self.pos)
+        self.pet = Pet(*self.pos, self)
         gfw.world.add(gfw.layer.player, self.pet)
 
         self.state = None
@@ -427,31 +427,31 @@ class Player:
         y -= platform.height / 2 + 1
         self.pos = x, y
 
-    def item_check(self, item):
+    def meso_check(self, meso):
         """
         Add value to score.
         ea_score is used to print '메소를 얻었습니다'
         """
         self.ea_score = 0
-        if item.get_type() == Meso.BRONZE:
+        if meso.get_type() == Meso.BRONZE:
             self.ea_score = random.randint(1, 49)
 
-        elif item.get_type() == Meso.GOLD:
+        elif meso.get_type() == Meso.GOLD:
             self.ea_score = random.randint(50, 99)
 
-        elif item.get_type() == Meso.BILL:
+        elif meso.get_type() == Meso.BILL:
             self.ea_score = random.randint(100, 999)
 
-        elif item.get_type() == Meso.SACK:
+        elif meso.get_type() == Meso.SACK:
             self.ea_score = random.randint(1000, 4999)
-
-        elif item.get_type() == Potion.HP:
-            pass
-
-        elif item.get_type() == Potion.MP:
-            pass
-
         self.score += self.ea_score
+
+    def item_check(self, item):
+        item_type = item.get_type()
+        if item_type == Potion.HP:
+            self.increase_hp()
+        elif item_type == Potion.MP:
+            self.increase_mp()
 
     @property
     def score(self):
@@ -467,10 +467,20 @@ class Player:
     def decrease_hp(self):
         if self.invincible > 0:
             return
-        self.life_gauge.decrease_hp()
+        if self.life_gauge.hp > 0:
+            self.life_gauge.hp -= 1
+
+    def increase_hp(self):
+        if self.life_gauge.hp < 10:
+            self.life_gauge.hp += 1
 
     def decrease_mp(self):
-        self.life_gauge.decrease_mp()
+        if self.life_gauge.mp > 0:
+            self.life_gauge.mp -= 1
+
+    def increase_mp(self):
+        if self.life_gauge.mp < 10:
+            self.life_gauge.mp += 1
 
     def make_invincible(self, sec):
         if self.invincible <= 0:

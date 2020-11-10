@@ -13,7 +13,7 @@ FONT_SIZE = 50
 
 
 def enter():
-    gfw.world.init(['bg', 'enemy', 'throwing', 'platform', 'item', 'player', 'ui'])
+    gfw.world.init(['bg', 'enemy', 'throwing', 'platform', 'meso', 'item', 'player', 'ui'])
 
     bg = Background('background/stage1_bg_far.png')
     bg.speed = 10
@@ -52,19 +52,27 @@ def update():
         for obj in gfw.world.objects_at(layer):
             obj.move(dx)
 
-    check_items()
+    check_meso()
     check_enemy()
+    check_item()
 
     stage_gen.update(dx)
 
 
-def check_items():
+def check_meso():
+    for item in gfw.world.objects_at(gfw.layer.meso):
+        if gobj.collides_box(player, item):
+            player.meso_check(item)
+            gfw.world.remove(item)
+            break
+
+
+def check_item():
     for item in gfw.world.objects_at(gfw.layer.item):
         if gobj.collides_box(player, item):
             player.item_check(item)
             gfw.world.remove(item)
             break
-
 
 def check_enemy():
     global player

@@ -52,16 +52,13 @@ def create_column():
 def create_object(ch, x, y):
     if ch in ['1', '2', '3', '4']:
         obj = Meso(ord(ch) - ord('1'), x, y)
-        gfw.world.add(gfw.layer.item, obj)
-        # print('creating Jelly', x, y)
+        gfw.world.add(gfw.layer.meso, obj)
     elif ch in ['O', 'P', 'Q']:
         dy = 3.8 if ch == 'O' else 1
         y -= int(dy * BLOCK_SIZE) // 2
         x -= BLOCK_SIZE // 2
         obj = Platform(ord(ch) - ord('O'), x, y)
         gfw.world.add(gfw.layer.platform, obj)
-        # print('creating Platform', x, y)
-
     # 루팡이 1 행에서 생성될 때와 나머지 행에서 생성될 때 y위치 값이 다르다
     elif ch in ['X']:
         if my_row == 2:
@@ -70,7 +67,6 @@ def create_object(ch, x, y):
             y -= 8
         obj = Lupin(x, y)
         gfw.world.add(gfw.layer.enemy, obj)
-
     elif ch in ['A', 'B']:
         obj = Potion(ord(ch) - ord('A'), x, y)
         gfw.world.add(gfw.layer.item, obj)
