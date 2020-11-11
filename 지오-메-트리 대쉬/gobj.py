@@ -4,7 +4,7 @@ import gfw
 import math
 
 RES_DIR = './Assets/'
-UNIT = 30
+UNIT = 40
 
 
 def res(file):

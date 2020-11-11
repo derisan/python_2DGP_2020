@@ -7,6 +7,7 @@ import gobj
 from background import HorzScrollBackground
 from player import Player
 from platformer import Platformer
+import stage_gen
 
 canvas_width = 800
 canvas_height = 400
@@ -27,6 +28,8 @@ def enter():
     global player
     player = Player()
     gfw.world.add(gfw.layer.player, player)
+
+    stage_gen.load(gobj.res('stage_01.txt'))
 
 
 def exit():
@@ -55,29 +58,19 @@ def update():
     if paused:
         return
     gfw.world.update()
-    move_platform()
+
+    dx = -250 * gfw.delta_time
+
+    for layer in range(gfw.layer.platform, gfw.layer.player):
+        for obj in gfw.world.objects_at(layer):
+            obj.move(dx)
+
+    stage_gen.update(dx)
 
 
 def draw():
     gfw.world.draw()
     gobj.draw_collision_box()
-
-
-def move_platform():
-    x = 0
-    dx = -200 * gfw.delta_time
-    for layer in range(gfw.layer.platform, gfw.layer.player):
-        for obj in gfw.world.objects_at(layer):
-            obj.move(dx)
-            r = obj.right
-            if x < r:
-                x = r
-
-    cw = get_canvas_width()
-    while x < cw:
-        pf = Platformer(Platformer.LONG, x, 0)
-        gfw.world.add(gfw.layer.platform, pf)
-        x += pf.width
 
 
 if __name__ == '__main__':
