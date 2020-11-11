@@ -9,9 +9,9 @@ import gobj
 class Player:
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
 
-    RUNNING, FALLING = range(2)
-    GRAVITY = 500
-    JUMP = 800
+    RUNNING, FALLING, JUMPING = range(3)
+    GRAVITY = 3000
+    JUMP = 700
 
     def __init__(self):
         self.pos = 150, get_canvas_height() // 2
@@ -26,7 +26,6 @@ class Player:
         pair = e.type, e.key
         if pair == Player.KEYDOWN_SPACE:
             self.jump()
-            self.rotation -= 90
 
     def update(self):
         self.time += gfw.delta_time
@@ -43,7 +42,7 @@ class Player:
                 if foot > t:
                     self.state = Player.FALLING
                     self.jump_speed = 0
-            elif self.state == Player.FALLING:
+            elif self.state != Player.RUNNING:
                 if self.jump_speed < 0 and int(foot) <= t:
                     self.move((0, t - foot))
                     self.state = Player.RUNNING
@@ -81,4 +80,9 @@ class Player:
         self.pos = gobj.point_add(self.pos, diff)
 
     def jump(self):
+        if self.state == Player.FALLING or self.state == Player.JUMPING:
+            return
+        if self.state == Player.RUNNING:
+            self.state = Player.JUMPING
         self.jump_speed = Player.JUMP
+        self.rotation -= 90

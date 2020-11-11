@@ -69,7 +69,9 @@ def move_platform():
     for layer in range(gfw.layer.platform, gfw.layer.player):
         for obj in gfw.world.objects_at(layer):
             obj.move(dx)
-            x = obj.right
+            r = obj.right
+            if x < r:
+                x = r
 
     cw = get_canvas_width()
     while x < cw:
