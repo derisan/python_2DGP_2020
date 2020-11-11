@@ -4,6 +4,9 @@
     "Assets/game_background.png",
     "Assets/platform.png"
   ],
+  "ogg": [
+    "Assets/loading.ogg"
+  ],
   "jpg": [
     "Assets/loading_screen.jpg"
   ]

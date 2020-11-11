@@ -11,8 +11,12 @@ center_y = canvas_height // 2
 
 
 def enter():
-    global background, files, file_index, elapsed
+    global background, files, file_index, elapsed, bgm
     background = gfw.image.load(res('loading_screen.jpg'))
+
+    bgm = gfw.sound.load('Assets/loading.ogg')
+    bgm.set_volume(64)
+    bgm.repeat_play()
 
     import asset_to_json
     files = []
@@ -30,6 +34,7 @@ def exit():
     gfw.image.unload(res('loading_screen,jpg'))
     del background
 
+    bgm.stop()
 
 def update():
     global file_index, elapsed
@@ -59,7 +64,7 @@ def handle_event(e):
     elif e.type == SDL_KEYDOWN:
         if e.key == SDLK_ESCAPE:
             gfw.pop()
-        if e.key == SDLK_RETURN:
+        if e.key == SDLK_RETURN or e.key == SDLK_KP_ENTER:
             gfw.change(main_state)
 
 
