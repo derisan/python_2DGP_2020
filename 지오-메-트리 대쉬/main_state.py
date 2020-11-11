@@ -1,16 +1,19 @@
+import random
+
 from pico2d import *
 
 import gfw
 import gobj
 from background import HorzScrollBackground
 from player import Player
+from platformer import Platformer
 
 canvas_width = 800
-canvas_height = 500
+canvas_height = 400
 
 
 def enter():
-    gfw.world.init(['bg', 'player'])
+    gfw.world.init(['bg', 'platform', 'player'])
 
     bg = HorzScrollBackground('game_background.png')
     bg.speed = 50
@@ -24,6 +27,14 @@ def enter():
     global player
     player = Player()
     gfw.world.add(gfw.layer.player, player)
+
+    x = 0
+    cw = get_canvas_width()
+    while x < cw:
+        t = random.choice([0, 1])
+        pf = Platformer(t, x, 0)
+        gfw.world.add(gfw.layer.platform, pf)
+        x += pf.width
 
 
 def exit():

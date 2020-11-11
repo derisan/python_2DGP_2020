@@ -8,8 +8,10 @@ import gobj
 
 class Player:
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
-    GRAVITY = 550
-    JUMP = 500
+    GRAVITY = 500
+    JUMP = 100
+    WIDTH = 30
+    HEIGHT = 30
 
     def __init__(self):
         self.pos = 150, get_canvas_height() // 2
@@ -33,10 +35,12 @@ class Player:
 
     def draw(self):
         rot = gobj.to_rad(self.rotation)
-        self.image.composite_draw(rot, 'h', *self.pos)
+        self.image.composite_draw(rot, 'h', *self.pos, w=Player.WIDTH, h=Player.HEIGHT)
 
     def get_bb(self):
-        return 0, 0, 10, 10
+        hw, hh = 15, 15
+        x, y = self.pos
+        return x - hw, y - hh, x + hw, y + hh
 
     def move(self, diff):
         self.pos = gobj.point_add(self.pos, diff)
