@@ -16,9 +16,9 @@ for file in files:
         continue
     if extension not in assets:
         assets[extension] = []
-        assets[extension].append(file)
+        assets[extension].append('Assets/' + file)
     else:
-        assets[extension].append(file)
+        assets[extension].append('Assets/' + file)
 
 with open('assets.json', 'w') as f:
     json.dump(assets, f, indent = 2)

@@ -4,7 +4,7 @@ from gobj import res
 
 
 def enter():
-    global background, files
+    global background, files, file_index
     background = gfw.image.load(res('loading_screen.jpg'))
 
     import asset_to_json
@@ -14,6 +14,7 @@ def enter():
         for i in data:
             for v in data[i]:
                 files.append(v)
+    file_index = 0
 
 
 def exit():
@@ -23,7 +24,20 @@ def exit():
 
 
 def update():
-    pass
+    global file_index
+
+    if file_index == len(files):
+        return
+
+    file = files[file_index]
+    extension = file.split('.')[1]
+    if extension in ['jpg', 'png']:
+        gfw.image.load(file)
+    elif extension in ['mp3', 'wav', 'ogg']:
+        gfw.sound.load(file)
+    file_index += 1
+
+    print(f"Load file: {file}")
 
 
 def draw():
