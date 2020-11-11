@@ -28,14 +28,6 @@ def enter():
     player = Player()
     gfw.world.add(gfw.layer.player, player)
 
-    x = 0
-    cw = get_canvas_width()
-    while x < cw:
-        t = random.choice([Platformer.SHORT, Platformer.LONG])
-        pf = Platformer(t, x, 0)
-        gfw.world.add(gfw.layer.platform, pf)
-        x += pf.width
-
 
 def exit():
     bgm.stop()
@@ -63,16 +55,27 @@ def update():
     if paused:
         return
     gfw.world.update()
-
-    dx = -200 * gfw.delta_time
-    for layer in range(gfw.layer.platform, gfw.layer.player):
-        for obj in gfw.world.objects_at(layer):
-            obj.move(dx)
+    move_platform()
 
 
 def draw():
     gfw.world.draw()
     gobj.draw_collision_box()
+
+
+def move_platform():
+    x = 0
+    dx = -200 * gfw.delta_time
+    for layer in range(gfw.layer.platform, gfw.layer.player):
+        for obj in gfw.world.objects_at(layer):
+            obj.move(dx)
+            x = obj.right
+
+    cw = get_canvas_width()
+    while x < cw:
+        pf = Platformer(Platformer.LONG, x, 0)
+        gfw.world.add(gfw.layer.platform, pf)
+        x += pf.width
 
 
 if __name__ == '__main__':

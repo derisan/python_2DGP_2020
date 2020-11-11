@@ -8,10 +8,10 @@ import gobj
 
 class Player:
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
+
+    RUNNING, FALLING = range(2)
     GRAVITY = 500
-    JUMP = 100
-    WIDTH = 30
-    HEIGHT = 30
+    JUMP = 800
 
     def __init__(self):
         self.pos = 150, get_canvas_height() // 2
@@ -20,6 +20,7 @@ class Player:
         self.time = 0
         self.jump_speed = 0
         self.rotation = 0
+        self.state = Player.RUNNING
 
     def handle_event(self, e):
         pair = e.type, e.key
@@ -30,17 +31,51 @@ class Player:
     def update(self):
         self.time += gfw.delta_time
 
-        self.move((0, self.jump_speed * gfw.delta_time))
-        self.jump_speed -= Player.GRAVITY * gfw.delta_time
+        if self.state != Player.RUNNING:
+            self.move((0, self.jump_speed * gfw.delta_time))
+            self.jump_speed -= Player.GRAVITY * gfw.delta_time
+
+        _, foot, _, _ = self.get_bb()
+        platform = self.get_platform(foot)
+        if platform is not None:
+            l, b, r, t = platform.get_bb()
+            if self.state == Player.RUNNING:
+                if foot > t:
+                    self.state = Player.FALLING
+                    self.jump_speed = 0
+            elif self.state == Player.FALLING:
+                if self.jump_speed < 0 and int(foot) <= t:
+                    self.move((0, t - foot))
+                    self.state = Player.RUNNING
+                    self.jump_speed = 0
+
+    def get_platform(self, foot):
+        selected = None
+        sel_top = 0
+        x, y = self.pos
+        for platform in gfw.world.objects_at(gfw.layer.platform):
+            l, b, r, t = platform.get_bb()
+            if x < l or x > r:
+                continue
+            if foot < b:
+                continue
+            if selected is None:
+                selected = platform
+                sel_top = t
+            else:
+                if t > sel_top:
+                    selected = platform
+                    sel_top = t
+        return selected
 
     def draw(self):
         rot = gobj.to_rad(self.rotation)
-        self.image.composite_draw(rot, 'h', *self.pos, w=Player.WIDTH, h=Player.HEIGHT)
+        self.image.composite_draw(rot, 'h', *self.pos, w=gobj.UNIT, h=gobj.UNIT)
 
     def get_bb(self):
-        hw, hh = 15, 15
+        hu = gobj.UNIT // 2
         x, y = self.pos
-        return x - hw, y - hh, x + hw, y + hh
+        return x - hu, y - hu, x + hu, y + hu
 
     def move(self, diff):
         self.pos = gobj.point_add(self.pos, diff)

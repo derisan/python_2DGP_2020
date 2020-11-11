@@ -1,15 +1,14 @@
 import gfw
 import gobj
 
-UNIT = 30
 INFO = [
-    (5 * UNIT, 0.5 * UNIT, 'l_platform.png'),
-    (1 * UNIT, 0.5 * UNIT, 's_platform.png'),
+    (5 * gobj.UNIT, 0.5 * gobj.UNIT, 'l_platform.png'),
+    (1 * gobj.UNIT, 0.5 * gobj.UNIT, 's_platform.png'),
 ]
 
 
 class Platformer:
-    SHORT, LONG = range(2)
+    LONG, SHORT = range(2)
 
     def __init__(self, type, left, bottom):
         self.left = left
@@ -30,3 +29,7 @@ class Platformer:
         self.left += dx
         if self.left + self.width < 0:
             gfw.world.remove(self)
+
+    @property
+    def right(self):
+        return self.left + self.width
