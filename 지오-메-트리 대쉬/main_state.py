@@ -3,21 +3,31 @@ from pico2d import *
 import gfw
 import gobj
 from background import HorzScrollBackground
+from player import Player
 
 canvas_width = 800
 canvas_height = 500
 
 
 def enter():
-    gfw.world.init(['bg'])
+    gfw.world.init(['bg', 'player'])
 
     bg = HorzScrollBackground('game_background.png')
     bg.speed = 50
     gfw.world.add(gfw.layer.bg, bg)
 
+    global bgm
+    bgm = gfw.sound.load('Assets/main_bgm.ogg')
+    bgm.set_volume(64)
+    bgm.repeat_play()
+
+    global player
+    player = Player()
+    gfw.world.add(gfw.layer.player, player)
+
 
 def exit():
-    pass
+    bgm.stop()
 
 
 def handle_event(e):

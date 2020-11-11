@@ -14,7 +14,7 @@ def enter():
     global background, files, file_index, elapsed, bgm
     background = gfw.image.load(res('loading_screen.jpg'))
 
-    bgm = gfw.sound.load('Assets/loading.ogg')
+    bgm = gfw.sound.load('Assets/loading_bgm.ogg')
     bgm.set_volume(64)
     bgm.repeat_play()
 

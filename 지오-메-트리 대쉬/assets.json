@@ -5,7 +5,8 @@
     "Assets/platform.png"
   ],
   "ogg": [
-    "Assets/loading.ogg"
+    "Assets/loading_bgm.ogg",
+    "Assets/main_bgm.ogg"
   ],
   "jpg": [
     "Assets/loading_screen.jpg"
