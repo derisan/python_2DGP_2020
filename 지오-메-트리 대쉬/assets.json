@@ -1,0 +1,13 @@
+{
+  "png": [
+    "cube.png",
+    "game_background.png",
+    "platform.png"
+  ],
+  "mp3": [
+    "loading.mp3"
+  ],
+  "jpg": [
+    "loading_screen.jpg"
+  ]
+}
