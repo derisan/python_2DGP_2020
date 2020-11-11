@@ -1,6 +1,7 @@
 import random
 from pico2d import *
 import gfw
+import math
 
 RES_DIR = './Assets/'
 
@@ -77,6 +78,10 @@ def pt_in_rect(point, rect):
         return False
 
     return True
+
+
+def to_rad(deg):
+    return math.radians(deg)
 
 
 class ImageObject:

@@ -42,6 +42,8 @@ def handle_event(e):
             global paused
             paused = not paused
 
+    player.handle_event(e)
+
 
 paused = False
 
@@ -54,6 +56,7 @@ def update():
 
 def draw():
     gfw.world.draw()
+    gobj.draw_collision_box()
 
 
 if __name__ == '__main__':

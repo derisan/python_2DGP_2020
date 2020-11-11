@@ -3,29 +3,43 @@ from typing import Tuple
 from pico2d import *
 
 import gfw
-from gobj import res
+import gobj
 
 
 class Player:
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
+    GRAVITY = 550
+    JUMP = 500
 
     def __init__(self):
         self.pos = 150, get_canvas_height() // 2
         self.delta: Tuple[float, float] = 0, 0
-        self.image = gfw.image.load(res('cube.png'))
+        self.image = gfw.image.load(gobj.res('cube.png'))
         self.time = 0
-        self.FPS = 10
+        self.jump_speed = 0
+        self.rotation = 0
 
     def handle_event(self, e):
         pair = e.type, e.key
         if pair == Player.KEYDOWN_SPACE:
-            pass
+            self.jump()
+            self.rotation -= 90
 
     def update(self):
         self.time += gfw.delta_time
 
+        self.move((0, self.jump_speed * gfw.delta_time))
+        self.jump_speed -= Player.GRAVITY * gfw.delta_time
+
     def draw(self):
-        self.image.composite_draw(0, 'h', *self.pos)
+        rot = gobj.to_rad(self.rotation)
+        self.image.composite_draw(rot, 'h', *self.pos)
 
     def get_bb(self):
-        pass
+        return 0, 0, 10, 10
+
+    def move(self, diff):
+        self.pos = gobj.point_add(self.pos, diff)
+
+    def jump(self):
+        self.jump_speed = Player.JUMP
