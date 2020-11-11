@@ -31,7 +31,7 @@ def enter():
     x = 0
     cw = get_canvas_width()
     while x < cw:
-        t = random.choice([0, 1])
+        t = random.choice([Platformer.SHORT, Platformer.LONG])
         pf = Platformer(t, x, 0)
         gfw.world.add(gfw.layer.platform, pf)
         x += pf.width
@@ -63,6 +63,11 @@ def update():
     if paused:
         return
     gfw.world.update()
+
+    dx = -200 * gfw.delta_time
+    for layer in range(gfw.layer.platform, gfw.layer.player):
+        for obj in gfw.world.objects_at(layer):
+            obj.move(dx)
 
 
 def draw():

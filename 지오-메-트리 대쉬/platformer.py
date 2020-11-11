@@ -25,3 +25,8 @@ class Platformer:
 
     def get_bb(self):
         return self.left, self.bottom, self.left + self.width, self.bottom + self.height
+
+    def move(self, dx):
+        self.left += dx
+        if self.left + self.width < 0:
+            gfw.world.remove(self)
