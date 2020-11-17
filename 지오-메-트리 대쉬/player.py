@@ -11,7 +11,7 @@ class Player:
 
     RUNNING, FALLING, JUMPING = range(3)
     GRAVITY = 3000
-    JUMP = 700
+    JUMP = 600
 
     def __init__(self):
         self.pos = 150, get_canvas_height() // 2

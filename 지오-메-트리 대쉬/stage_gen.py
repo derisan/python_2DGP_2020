@@ -4,7 +4,7 @@ import gfw
 from platformer import Platformer
 
 UNIT_PER_LINE = 100
-SCREEN_LINES = 10
+SCREEN_LINES = 5
 BLOCK_SIZE = gobj.UNIT
 
 lines = []

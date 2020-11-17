@@ -3,7 +3,7 @@ import gobj
 
 INFO = [
     (5 * gobj.UNIT, 0.5 * gobj.UNIT, 'l_platform.png'),
-    (1 * gobj.UNIT, 0.5 * gobj.UNIT, 's_platform.png'),
+    (1.5 * gobj.UNIT, 0.5 * gobj.UNIT, 's_platform.png'),
 ]
 
 
