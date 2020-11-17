@@ -5,7 +5,6 @@ from pico2d import *
 
 import gfw.font
 import gfw.image
-import gfw.sound
 import gfw.world
 
 running = True

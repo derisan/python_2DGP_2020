@@ -14,7 +14,7 @@ def enter():
     global background, files, file_index, elapsed, bgm
     background = gfw.image.load(res('loading_screen.jpg'))
 
-    bgm = gfw.sound.load('Assets/loading_bgm.ogg')
+    bgm = load_music('Assets/loading_bgm.ogg')
     bgm.set_volume(64)
     bgm.repeat_play()
 
@@ -30,11 +30,12 @@ def enter():
 
 
 def exit():
-    global background
+    global background, bgm
     gfw.image.unload(res('loading_screen,jpg'))
     del background
-
     bgm.stop()
+    del bgm
+
 
 def update():
     global file_index, elapsed
@@ -46,8 +47,6 @@ def update():
         extension = file.split('.')[1]
         if extension in ['jpg', 'png']:
             gfw.image.load(file)
-        elif extension in ['mp3', 'wav', 'ogg']:
-            gfw.sound.load(file)
         file_index += 1
         print(f"Load file: {file}")
     else:

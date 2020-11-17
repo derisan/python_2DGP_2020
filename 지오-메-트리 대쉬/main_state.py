@@ -21,7 +21,7 @@ def enter():
     gfw.world.add(gfw.layer.bg, bg)
 
     global bgm
-    bgm = gfw.sound.load('Assets/main_bgm.ogg')
+    bgm = load_music('Assets/main_bgm.ogg')
     bgm.set_volume(64)
     bgm.repeat_play()
 
@@ -33,7 +33,9 @@ def enter():
 
 
 def exit():
+    global bgm
     bgm.stop()
+    del bgm
 
 
 def handle_event(e):
