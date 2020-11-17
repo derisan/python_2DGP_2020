@@ -43,6 +43,12 @@ def create_column():
 
 
 def create_object(ch, x, y):
+    """
+    'O' Long platform
+    'P' Short platform
+    'Q' Jump platform
+    'R' Spike
+    """
     if ch in ['O', 'P', 'Q', 'R']:
         dy = 3 if ch == 'O' else 4
         y -= dy * BLOCK_SIZE // 2

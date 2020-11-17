@@ -72,13 +72,11 @@ def update():
     stage_gen.update(dx)
 
 
-n_collide = 0
 def check_spike():
     global n_collide
     for spike in gfw.world.objects_at(gfw.layer.spike):
         if gobj.collides_box(player, spike):
-            print(n_collide)
-            n_collide += 1
+            player.die()
             break
 
 

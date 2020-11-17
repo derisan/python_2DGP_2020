@@ -11,7 +11,7 @@ from platformer import Platformer
 class Player:
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
 
-    RUNNING, FALLING, JUMPING = range(3)
+    RUNNING, FALLING, JUMPING, DEAD = range(4)
     GRAVITY = 3000
     JUMP = 600
 
@@ -32,6 +32,9 @@ class Player:
     def update(self):
         self.time += gfw.delta_time
 
+        if self.state == Player.DEAD:
+            pass
+
         if self.state != Player.RUNNING:
             self.move((0, self.jump_speed * gfw.delta_time))
             self.jump_speed -= Player.GRAVITY * gfw.delta_time
@@ -51,6 +54,9 @@ class Player:
                     self.jump_speed = 0
                     if platform.type == Platformer.JUMP:
                         self.force_to_jump()
+
+        if self.is_fall():
+            self.die()
 
     def get_platform(self, foot):
         selected = None
@@ -93,5 +99,16 @@ class Player:
 
     def force_to_jump(self):
         self.state = Player.JUMPING
-        self.jump_speed = Player.JUMP
+        self.jump_speed = Player.JUMP + 200
         self.rotation -= 90
+
+    def die(self):
+        self.state = Player.DEAD
+        print("You die!!")
+
+    def is_fall(self):
+        x, y = self.pos
+        hu = gobj.UNIT // 2
+        if y + hu < 0:
+            return True
+        return False
