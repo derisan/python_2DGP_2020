@@ -5,6 +5,8 @@ from pico2d import *
 import gfw
 import gobj
 
+from platformer import Platformer
+
 
 class Player:
     KEYDOWN_SPACE = (SDL_KEYDOWN, SDLK_SPACE)
@@ -47,6 +49,8 @@ class Player:
                     self.move((0, t - foot))
                     self.state = Player.RUNNING
                     self.jump_speed = 0
+                    if platform.type == Platformer.JUMP:
+                        self.force_to_jump()
 
     def get_platform(self, foot):
         selected = None
@@ -84,5 +88,10 @@ class Player:
             return
         if self.state == Player.RUNNING:
             self.state = Player.JUMPING
+        self.jump_speed = Player.JUMP
+        self.rotation -= 90
+
+    def force_to_jump(self):
+        self.state = Player.JUMPING
         self.jump_speed = Player.JUMP
         self.rotation -= 90

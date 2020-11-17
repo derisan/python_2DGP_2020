@@ -4,7 +4,7 @@ import gobj
 INFO = [
     (5 * gobj.UNIT, 0.5 * gobj.UNIT, 'l_platform.png'),
     (1.5 * gobj.UNIT, 0.5 * gobj.UNIT, 's_platform.png'),
-    (1.0 * gobj.UNIT, 0.5 * gobj.UNIT, 'j_platform.png'),
+    (1.25 * gobj.UNIT, 0.5 * gobj.UNIT, 'j_platform.png'),
     (0.5 * gobj.UNIT, 0.7 * gobj.UNIT, 'spike.png'),
 
 ]
@@ -18,6 +18,7 @@ class Platformer:
         self.bottom = bottom
         self.width, self.height, fn = INFO[type]
         self.image = gfw.image.load(gobj.res(fn))
+        self.type = type
 
     def update(self):
         pass
