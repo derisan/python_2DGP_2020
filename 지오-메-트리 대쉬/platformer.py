@@ -4,12 +4,14 @@ import gobj
 INFO = [
     (5 * gobj.UNIT, 0.5 * gobj.UNIT, 'l_platform.png'),
     (1.5 * gobj.UNIT, 0.5 * gobj.UNIT, 's_platform.png'),
+    (1.0 * gobj.UNIT, 0.5 * gobj.UNIT, 'j_platform.png'),
     (0.5 * gobj.UNIT, 0.7 * gobj.UNIT, 'spike.png'),
+
 ]
 
 
 class Platformer:
-    LONG, SHORT, SPIKE = range(3)
+    LONG, SHORT, JUMP, SPIKE = range(4)
 
     def __init__(self, type, left, bottom):
         self.left = left

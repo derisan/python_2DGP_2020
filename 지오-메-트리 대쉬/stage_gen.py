@@ -43,12 +43,12 @@ def create_column():
 
 
 def create_object(ch, x, y):
-    if ch in ['O', 'P', 'Q']:
+    if ch in ['O', 'P', 'Q', 'R']:
         dy = 3 if ch == 'O' else 4
         y -= dy * BLOCK_SIZE // 2
         x -= BLOCK_SIZE // 2
         obj = Platformer(ord(ch) - ord('O'), x, y)
-        if ch != 'Q':
+        if ch != 'R':
             gfw.world.add(gfw.layer.platform, obj)
         else:
             gfw.world.add(gfw.layer.spike, obj)
