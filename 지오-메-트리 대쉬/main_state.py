@@ -14,7 +14,7 @@ canvas_height = 400
 
 
 def enter():
-    gfw.world.init(['bg', 'platform', 'player'])
+    gfw.world.init(['bg', 'platform', 'spike', 'player'])
 
     bg = HorzScrollBackground('game_background.png')
     bg.speed = 50
@@ -63,11 +63,23 @@ def update():
 
     dx = -250 * gfw.delta_time
 
-    for layer in range(gfw.layer.platform, gfw.layer.player):
+    for layer in range(gfw.layer.platform, gfw.layer.spike + 1):
         for obj in gfw.world.objects_at(layer):
             obj.move(dx)
 
+    check_spike()
+
     stage_gen.update(dx)
+
+
+n_collide = 0
+def check_spike():
+    global n_collide
+    for spike in gfw.world.objects_at(gfw.layer.spike):
+        if gobj.collides_box(player, spike):
+            print(n_collide)
+            n_collide += 1
+            break
 
 
 def draw():
