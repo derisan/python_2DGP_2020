@@ -21,7 +21,7 @@ def enter():
     gfw.world.add(gfw.layer.bg, bg)
 
     global bgm
-    bgm = load_music('Assets/main_bgm.ogg')
+    bgm = load_music('Assets/Remembrance.ogg')
     bgm.set_volume(64)
     bgm.repeat_play()
 
