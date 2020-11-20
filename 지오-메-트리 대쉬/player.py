@@ -23,6 +23,7 @@ class Player:
         self.jump_speed = 0
         self.rotation = 0
         self.state = Player.RUNNING
+        self.n_die = 0
 
     def handle_event(self, e):
         pair = e.type, e.key
@@ -31,9 +32,6 @@ class Player:
 
     def update(self):
         self.time += gfw.delta_time
-
-        if self.state == Player.DEAD:
-            pass
 
         if self.state != Player.RUNNING:
             self.move((0, self.jump_speed * gfw.delta_time))
@@ -105,6 +103,7 @@ class Player:
 
     def die(self):
         self.state = Player.DEAD
+        self.n_die += 1
 
     def is_fall(self):
         x, y = self.pos
@@ -112,3 +111,9 @@ class Player:
         if y + hu < 0:
             return True
         return False
+
+    def reset(self):
+        self.state = Player.RUNNING
+        self.pos = 150, get_canvas_height() // 2
+        self.jump_speed = 0
+        self.rotation = 0

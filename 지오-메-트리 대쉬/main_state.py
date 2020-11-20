@@ -63,6 +63,10 @@ def update():
         return
     gfw.world.update()
 
+    if player.state == Player.DEAD:
+        retry()
+        return
+
     dx = -250 * gfw.delta_time
 
     for layer in range(gfw.layer.platform, gfw.layer.spike + 1):
@@ -70,7 +74,6 @@ def update():
             obj.move(dx)
 
     check_spike()
-
     stage_gen.update(dx)
 
 
@@ -86,7 +89,16 @@ def draw():
     gfw.world.draw()
     gobj.draw_collision_box()
 
-    font.draw(0, get_canvas_height() - 15, f'Attempt: {1}', (255, 0, 0))
+    font.draw(0, get_canvas_height() - 15, f'Attempt: {player.n_die}', (255, 0, 0))
+
+
+def retry():
+    global paused
+    for platform in gfw.world.objects_at(gfw.layer.platform):
+        gfw.world.remove(platform)
+    stage_gen.reset()
+    player.reset()
+    paused = True
 
 
 if __name__ == '__main__':

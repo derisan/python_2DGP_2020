@@ -67,3 +67,10 @@ def get(x, y):
     col = x % UNIT_PER_LINE
     row = x // UNIT_PER_LINE * SCREEN_LINES + SCREEN_LINES - 1 - y
     return lines[row][col]
+
+
+def reset():
+    global current_x, create_at, map_index
+    current_x = 0
+    map_index = 0
+    create_at = get_canvas_width() + 2 * BLOCK_SIZE
