@@ -6,7 +6,6 @@ import gfw
 import gobj
 from background import HorzScrollBackground
 from player import Player
-from platformer import Platformer
 import stage_gen
 
 canvas_width = 800
@@ -28,6 +27,9 @@ def enter():
     global player
     player = Player()
     gfw.world.add(gfw.layer.player, player)
+
+    global font
+    font = gfw.font.load('Assets/Maplestory Bold.ttf', 25)
 
     stage_gen.load(gobj.res('stage_01.txt'))
 
@@ -83,6 +85,8 @@ def check_spike():
 def draw():
     gfw.world.draw()
     gobj.draw_collision_box()
+
+    font.draw(0, get_canvas_height() - 15, f'Attempt: {1}', (255, 0, 0))
 
 
 if __name__ == '__main__':
