@@ -6,11 +6,12 @@ import gfw
 import gobj
 from background import HorzScrollBackground
 from player import Player
+from platformer import Platformer
 import stage_gen
+import score_state
 
-canvas_width = 800
-canvas_height = 400
-
+canvas_width = gobj.CANVAS_WIDTH
+canvas_height = gobj.CANVAS_HEIGHT
 
 def enter():
     gfw.world.init(['bg', 'platform', 'spike', 'player'])
@@ -74,6 +75,7 @@ def update():
             obj.move(dx)
 
     check_spike()
+    is_win()
     stage_gen.update(dx)
 
 
@@ -83,6 +85,14 @@ def check_spike():
         if gobj.collides_box(player, spike):
             player.die()
             break
+
+
+def is_win() -> bool:
+    for platform in gfw.world.objects_at(gfw.layer.platform):
+        if platform.type != Platformer.GOAL:
+            continue;
+        if gobj.collides_box(player, platform):
+            gfw.change(score_state)
 
 
 def draw():

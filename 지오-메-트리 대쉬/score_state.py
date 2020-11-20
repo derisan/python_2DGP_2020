@@ -1,9 +1,10 @@
 from pico2d import *
 import gfw
 import main_state
+import gobj
 
-canvas_width = main_state.canvas_width
-canvas_height = main_state.canvas_height
+canvas_width = gobj.CANVAS_WIDTH
+canvas_height = gobj.CANVAS_HEIGHT
 
 center_x = canvas_width // 2
 center_y = canvas_height // 2
@@ -15,7 +16,7 @@ def enter():
 
     bgm = load_music('Assets/applause.wav')
     bgm.set_volume(64)
-    bgm.repeat_play()
+    bgm.play()
 
 
 def exit():

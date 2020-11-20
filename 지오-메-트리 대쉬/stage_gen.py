@@ -52,10 +52,11 @@ def create_object(ch, x, y):
     'Q' Jump platform
     'R' Spike
     'S' Basis
+    'T' Goal
     """
-    if ch in ['O', 'P', 'Q', 'R', 'S']:
+    if ch in ['O', 'P', 'Q', 'R', 'S', 'T']:
         # dy = 3 if ch == 'O' else 4
-        if ch == 'O':
+        if ch in ['O', 'T']:
             dy = 3
         elif ch == 'S':
             dy = 10

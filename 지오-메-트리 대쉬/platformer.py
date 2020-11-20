@@ -6,12 +6,13 @@ INFO = [
     (1.25 * gobj.UNIT, 0.5 * gobj.UNIT, 's_platform.png'),
     (1.25 * gobj.UNIT, 0.5 * gobj.UNIT, 'j_platform.png'),
     (0.5 * gobj.UNIT, 0.7 * gobj.UNIT, 'spike.png'),
-    (5 * gobj.UNIT, 0.5 * gobj.UNIT, 'l_platform.png'),
+    (5 * gobj.UNIT, 0.5 * gobj.UNIT, 'b_platform.png'),
+    (5 * gobj.UNIT, 0.5 * gobj.UNIT, 'g_platform.png'),
 ]
 
 
 class Platformer:
-    LONG, SHORT, JUMP, SPIKE, BASIS = range(5)
+    LONG, SHORT, JUMP, SPIKE, BASIS, GOAL = range(6)
 
     def __init__(self, type, left, bottom):
         self.left = left

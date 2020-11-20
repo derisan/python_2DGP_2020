@@ -4,7 +4,6 @@ from pico2d import *
 
 import gfw
 import gobj
-
 from platformer import Platformer
 
 
@@ -18,7 +17,7 @@ class Player:
     def __init__(self):
         self.pos = 150, get_canvas_height() // 2
         self.delta: Tuple[float, float] = 0, 0
-        self.image = gfw.image.load(gobj.res('cube.png'))
+        self.image = gfw.image.load('Assets/cube.png')
         self.time = 0
         self.jump_speed = 0
         self.rotation = 0

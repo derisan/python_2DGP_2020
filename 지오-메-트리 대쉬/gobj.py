@@ -6,6 +6,9 @@ import math
 RES_DIR = './Assets/'
 UNIT = 40
 
+CANVAS_WIDTH = 800
+CANVAS_HEIGHT = 400
+
 
 def res(file):
     return RES_DIR + file
