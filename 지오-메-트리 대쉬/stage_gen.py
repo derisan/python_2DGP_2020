@@ -51,9 +51,16 @@ def create_object(ch, x, y):
     'P' Short platform
     'Q' Jump platform
     'R' Spike
+    'S' Basis
     """
-    if ch in ['O', 'P', 'Q', 'R']:
-        dy = 3 if ch == 'O' else 4
+    if ch in ['O', 'P', 'Q', 'R', 'S']:
+        # dy = 3 if ch == 'O' else 4
+        if ch == 'O':
+            dy = 3
+        elif ch == 'S':
+            dy = 10
+        else:
+            dy = 4
         y -= dy * BLOCK_SIZE // 2
         x -= BLOCK_SIZE // 2
         obj = Platformer(ord(ch) - ord('O'), x, y)
