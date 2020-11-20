@@ -26,6 +26,10 @@ def count():
 
 def update(dx):
     global current_x, create_at
+
+    if map_index == len(lines) * 20 - 1:
+        return
+    
     current_x += dx
     while current_x < create_at:
         create_column()
