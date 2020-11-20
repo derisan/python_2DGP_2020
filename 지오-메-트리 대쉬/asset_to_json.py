@@ -8,7 +8,7 @@ files = os.listdir(path)
 
 assets = {}
 
-needs = ['wav', 'mp3', 'ogg', 'jpg', 'png']
+needs = ['jpg', 'png']
 
 for file in files:
     extension = file.split('.')[1]
