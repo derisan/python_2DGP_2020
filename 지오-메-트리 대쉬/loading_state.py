@@ -11,8 +11,8 @@ center_y = canvas_height // 2
 
 
 def enter():
-    global background, files, file_index, elapsed, bgm
-    background = gfw.image.load(res('loading_screen.jpg'))
+    global bg, files, file_index, elapsed, bgm
+    bg = gfw.image.load(res('loading_screen.jpg'))
 
     bgm = load_music('Assets/loading_bgm.ogg')
     bgm.set_volume(64)
@@ -30,9 +30,9 @@ def enter():
 
 
 def exit():
-    global background, bgm
+    global bg, bgm
     gfw.image.unload(res('loading_screen,jpg'))
-    del background
+    del bg
     bgm.stop()
     del bgm
 
@@ -54,7 +54,7 @@ def update():
 
 
 def draw():
-    background.draw(center_x, center_y, w=canvas_width, h=canvas_height)
+    bg.draw(center_x, center_y, w=canvas_width, h=canvas_height)
 
 
 def handle_event(e):
