@@ -41,7 +41,8 @@ def enter():
     gfw.world.add(gfw.layer.ui, prito)
 
     global prito_cooldown
-    prito_cooldown = random.uniform(5, 10)
+    # prito_cooldown = random.uniform(5, 10)
+    prito_cooldown = random.uniform(1, 2)
 
 
 def exit():
@@ -86,6 +87,9 @@ def update():
     if prito_cooldown < 0 and not prito.is_gen:
         prito_cooldown = random.uniform(5, 10)
         prito.generate()
+
+    if prito.is_timeover():
+        player.die()
 
     dx = -250 * gfw.delta_time
 
