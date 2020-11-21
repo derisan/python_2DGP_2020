@@ -2,12 +2,16 @@
   "png": [
     "Assets/b_platform.png",
     "Assets/cube.png",
+    "Assets/down.png",
     "Assets/game_background.png",
     "Assets/g_platform.png",
     "Assets/j_platform.png",
+    "Assets/left.png",
     "Assets/l_platform.png",
+    "Assets/right.png",
     "Assets/spike.png",
-    "Assets/s_platform.png"
+    "Assets/s_platform.png",
+    "Assets/up.png"
   ],
   "jpg": [
     "Assets/loading_screen.jpg"

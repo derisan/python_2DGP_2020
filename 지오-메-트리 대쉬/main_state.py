@@ -9,12 +9,14 @@ from player import Player
 from platformer import Platformer
 import stage_gen
 import score_state
+import prito
 
 canvas_width = gobj.CANVAS_WIDTH
 canvas_height = gobj.CANVAS_HEIGHT
 
+
 def enter():
-    gfw.world.init(['bg', 'platform', 'spike', 'player'])
+    gfw.world.init(['bg', 'platform', 'spike', 'player', 'ui'])
 
     bg = HorzScrollBackground('game_background.png')
     bg.speed = 50
@@ -33,6 +35,9 @@ def enter():
     font = gfw.font.load('Assets/Maplestory Bold.ttf', 25)
 
     stage_gen.load(gobj.res('stage_01.txt'))
+
+    prito.init()
+    gfw.world.add(gfw.layer.ui, prito)
 
 
 def exit():
@@ -54,11 +59,12 @@ def handle_event(e):
             paused = not paused
 
     player.handle_event(e)
+    if not prito.handle_event(e):
+        player.die()
 
 
 paused = False
-
-
+prito_cooldown = random.uniform(1, 5)
 def update():
     if paused:
         return
@@ -67,6 +73,13 @@ def update():
     if player.state == Player.DEAD:
         retry()
         return
+
+    global prito_cooldown
+    prito_cooldown -= gfw.delta_time
+
+    if prito_cooldown < 0 and not prito.is_gen:
+        prito_cooldown = random.uniform(5, 10)
+        prito.generate()
 
     dx = -250 * gfw.delta_time
 
@@ -108,6 +121,7 @@ def retry():
         gfw.world.remove(platform)
     stage_gen.reset()
     player.reset()
+    prito.reset()
     paused = True
 
 

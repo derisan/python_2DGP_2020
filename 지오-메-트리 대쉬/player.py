@@ -30,6 +30,9 @@ class Player:
             self.jump()
 
     def update(self):
+        if self.state == Player.DEAD:
+            return
+
         self.time += gfw.delta_time
 
         if self.state != Player.RUNNING:
