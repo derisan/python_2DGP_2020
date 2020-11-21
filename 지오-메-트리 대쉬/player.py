@@ -24,6 +24,7 @@ class Player:
         self.state = Player.RUNNING
         self.n_die = 0
         self.jump_sound = load_wav('Assets/jump.wav')
+        self.death_sound = load_wav('Assets/death.wav')
 
     def handle_event(self, e):
         pair = e.type, e.key
@@ -113,6 +114,7 @@ class Player:
         x, y = self.pos
         hu = gobj.UNIT // 2
         if y + hu < 0:
+            self.death_sound.play()
             return True
         return False
 
