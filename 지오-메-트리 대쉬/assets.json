@@ -1,6 +1,9 @@
 {
   "png": [
     "Assets/b_platform.png",
+    "Assets/cat_1.png",
+    "Assets/cat_2.png",
+    "Assets/cat_3.png",
     "Assets/cube.png",
     "Assets/down.png",
     "Assets/game_background.png",
@@ -8,6 +11,8 @@
     "Assets/j_platform.png",
     "Assets/left.png",
     "Assets/l_platform.png",
+    "Assets/pg_bg.png",
+    "Assets/pg_fg.png",
     "Assets/right.png",
     "Assets/spike.png",
     "Assets/s_platform.png",

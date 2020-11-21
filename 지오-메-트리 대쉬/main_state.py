@@ -10,6 +10,7 @@ from platformer import Platformer
 import stage_gen
 import score_state
 import prito
+import progress
 
 canvas_width = gobj.CANVAS_WIDTH
 canvas_height = gobj.CANVAS_HEIGHT
@@ -39,10 +40,11 @@ def enter():
     prito.init()
     prito.reset()
     gfw.world.add(gfw.layer.ui, prito)
-
     global prito_cooldown
-    # prito_cooldown = random.uniform(5, 10)
-    prito_cooldown = random.uniform(1, 2)
+    prito_cooldown = random.uniform(5, 10)
+
+    progress.init()
+    gfw.world.add(gfw.layer.ui, progress)
 
 
 def exit():
@@ -76,6 +78,8 @@ def handle_event(e):
 
 
 paused = False
+
+
 def update():
     if paused:
         return

@@ -2,6 +2,7 @@ from pico2d import *
 import gobj
 import gfw
 from platformer import Platformer
+import progress
 
 UNIT_PER_LINE = 100
 SCREEN_LINES = 5
@@ -29,6 +30,9 @@ def update(dx):
 
     if map_index == len(lines) * 20:
         return
+
+    progress.move(map_index, len(lines) * 20)
+
     current_x += dx
     while current_x < create_at:
         create_column()
