@@ -24,7 +24,7 @@ def enter():
 
     global bgm
     bgm = load_music('Assets/Remembrance.ogg')
-    bgm.set_volume(64)
+    bgm.set_volume(50)
     bgm.repeat_play()
 
     global player
@@ -37,7 +37,11 @@ def enter():
     stage_gen.load(gobj.res('stage_01.txt'))
 
     prito.init()
+    prito.reset()
     gfw.world.add(gfw.layer.ui, prito)
+
+    global prito_cooldown
+    prito_cooldown = random.uniform(5, 10)
 
 
 def exit():
@@ -57,6 +61,13 @@ def handle_event(e):
         elif e.key == SDLK_p:
             global paused
             paused = not paused
+        elif e.key == SDLK_RETURN:
+            if not paused:
+                return
+            global prito_cooldown
+            prito_cooldown = random.uniform(5, 10)
+            paused = False
+            bgm.repeat_play()
 
     player.handle_event(e)
     if not prito.handle_event(e):
@@ -64,15 +75,10 @@ def handle_event(e):
 
 
 paused = False
-prito_cooldown = random.uniform(1, 5)
 def update():
     if paused:
         return
     gfw.world.update()
-
-    if player.state == Player.DEAD:
-        retry()
-        return
 
     global prito_cooldown
     prito_cooldown -= gfw.delta_time
@@ -90,6 +96,10 @@ def update():
     check_spike()
     is_win()
     stage_gen.update(dx)
+
+    if player.state == Player.DEAD:
+        retry()
+        return
 
 
 def check_spike():
@@ -122,6 +132,7 @@ def retry():
     stage_gen.reset()
     player.reset()
     prito.reset()
+    bgm.stop()
     paused = True
 
 

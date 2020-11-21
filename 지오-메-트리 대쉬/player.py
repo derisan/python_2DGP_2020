@@ -15,7 +15,7 @@ class Player:
     JUMP = 600
 
     def __init__(self):
-        self.pos = 150, get_canvas_height() // 2
+        self.pos = 150, 100
         self.delta: Tuple[float, float] = 0, 0
         self.image = gfw.image.load('Assets/cube.png')
         self.time = 0
@@ -23,6 +23,7 @@ class Player:
         self.rotation = 0
         self.state = Player.RUNNING
         self.n_die = 0
+        self.jump_sound = load_wav('Assets/jump.wav')
 
     def handle_event(self, e):
         pair = e.type, e.key
@@ -97,6 +98,7 @@ class Player:
             self.state = Player.JUMPING
         self.jump_speed = Player.JUMP
         self.rotation -= 90
+        self.jump_sound.play()
 
     def force_to_jump(self):
         self.state = Player.JUMPING
@@ -116,6 +118,6 @@ class Player:
 
     def reset(self):
         self.state = Player.RUNNING
-        self.pos = 150, get_canvas_height() // 2
+        self.pos = 150, 100
         self.jump_speed = 0
         self.rotation = 0
