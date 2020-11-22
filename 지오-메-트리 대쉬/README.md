@@ -139,3 +139,26 @@
 
 ## 수업에 다루어 달라고 요청할 기술
 프로그래밍도 프로그래밍이지만 이미지 리소스를 다루기가 적잖이 까다롭다. 어디서 배운 적도 없을 뿐더러 구글에 쳐봐도 죄다 유니티를 활용한 것뿐이다. **스프라이트 시트를 효과적으로 다룰 수 있는 기술**을 배우고 싶다.
+
+# 2차 발표
+
+## 주차별 Commit 횟수
+![commits](/img/weekly_commit.jpg)
+
+## 지오-메-트리 대쉬
+![geo](/img/geo-me-try_dash.jpg)
+
+## 진행 상황 & 변경 사항
+![changes](/img/progress.jpg)
+
+## Class Player
+![player](/img/player.jpg)
+
+## Module progress_bar
+![pg_bar](/img/pg_bar.jpg)
+
+## Class Platform
+![platform](/img/platform.jpg)
+
+## Module quiz
+![quiz](/img/quiz.jpg)
