@@ -16,7 +16,7 @@ class Player:
 
     def __init__(self):
         self.pos = 150, 100
-        self.delta: Tuple[float, float] = 0, 0
+        self.delta = 0, 0
         self.image = gfw.image.load('Assets/m_cube.png')
         self.time = 0
         self.jump_speed = 0
