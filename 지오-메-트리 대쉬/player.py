@@ -113,7 +113,7 @@ class Player:
     def is_fall(self):
         x, y = self.pos
         hu = gobj.UNIT // 2
-        if y + hu < 0:
+        if y < -30:
             self.death_sound.play()
             return True
         return False

@@ -41,7 +41,7 @@ def enter():
     prito.reset()
     gfw.world.add(gfw.layer.ui, prito)
     global prito_cooldown
-    prito_cooldown = random.uniform(5, 10)
+    prito_cooldown = random.uniform(10, 15)
 
     progress.init()
     gfw.world.add(gfw.layer.ui, progress)
@@ -71,6 +71,9 @@ def handle_event(e):
             prito_cooldown = random.uniform(5, 10)
             paused = False
             bgm.repeat_play()
+        elif e.key == SDLK_d:
+            gfw.change(score_state)
+            score_state.set_attempt(player.n_die)
 
     player.handle_event(e)
     if not prito.handle_event(e):
@@ -89,7 +92,7 @@ def update():
     prito_cooldown -= gfw.delta_time
 
     if prito_cooldown < 0 and not prito.is_gen:
-        prito_cooldown = random.uniform(5, 10)
+        prito_cooldown = random.uniform(10, 15)
         prito.generate()
 
     if prito.is_timeover():
@@ -115,6 +118,7 @@ def check_spike():
     for spike in gfw.world.objects_at(gfw.layer.spike):
         if gobj.collides_box(player, spike):
             player.die()
+            player.death_sound.play()
             break
 
 
@@ -124,19 +128,21 @@ def is_win() -> bool:
             continue;
         if gobj.collides_box(player, platform):
             gfw.change(score_state)
+            score_state.set_attempt(player.n_die)
 
 
 def draw():
     gfw.world.draw()
-    gobj.draw_collision_box()
+    # gobj.draw_collision_box()
 
     font.draw(0, get_canvas_height() - 15, f'Attempt: {player.n_die}', (255, 0, 0))
 
 
 def retry():
     global paused
-    for platform in gfw.world.objects_at(gfw.layer.platform):
-        gfw.world.remove(platform)
+    for layer in range(gfw.layer.platform, gfw.layer.spike + 1):
+        for obj in gfw.world.objects_at(layer):
+            gfw.world.remove(obj)
     stage_gen.reset()
     player.reset()
     prito.reset()

@@ -32,7 +32,7 @@ def generate():
     global is_gen, time
     is_gen = True
     num = random.randint(4, 8)
-    time = num
+    time = num * 2
     for i in range(num):
         quiz.append(random.randint(UP, RIGHT))
 
@@ -43,7 +43,7 @@ def update():
         if len(quiz) == 0:
             is_gen = False
             success.play()
-            print("success")
+
     time -= gfw.delta_time
 
 
@@ -71,7 +71,6 @@ def check_answer(key):
         return True
     else:
         wrong.play()
-        print("wrong")
         return False
 
 
