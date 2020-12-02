@@ -12,7 +12,7 @@ center_y = canvas_height // 2
 
 def enter():
     global bg, bgm
-    bg = gfw.image.load('Assets/loading_screen.jpg')
+    bg = gfw.image.load('Assets/score_screen.png')
 
     bgm = load_music('Assets/applause.wav')
     bgm.set_volume(64)
@@ -21,7 +21,7 @@ def enter():
 
 def exit():
     global bg, bgm
-    gfw.image.unload('Assets/loading_screen.jpg')
+    gfw.image.unload('Assets/score_screen.png')
     del bg
     bgm.stop()
     del bgm
