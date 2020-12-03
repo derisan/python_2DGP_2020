@@ -68,9 +68,6 @@ class Player:
             l, b, r, t = platform.get_bb()
             if x < l or x > r:
                 continue
-            mid = (b + t) // 2
-            if foot < mid:
-                continue
             if selected is None:
                 selected = platform
                 sel_top = t
@@ -113,7 +110,7 @@ class Player:
     def is_fall(self):
         x, y = self.pos
         hu = gobj.UNIT // 2
-        if y < -30:
+        if y - hu < 0:
             self.death_sound.play()
             return True
         return False
