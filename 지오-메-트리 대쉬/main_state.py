@@ -15,6 +15,7 @@ import progress
 canvas_width = gobj.CANVAS_WIDTH
 canvas_height = gobj.CANVAS_HEIGHT
 
+disabled = False
 
 def enter():
     gfw.world.init(['bg', 'platform', 'spike', 'player', 'ui'])
@@ -71,9 +72,12 @@ def handle_event(e):
             prito_cooldown = random.uniform(5, 10)
             paused = False
             bgm.repeat_play()
-        elif e.key == SDLK_d:
+        elif e.key == SDLK_s:
             gfw.change(score_state)
             score_state.set_attempt(player.n_die)
+        elif e.key == SDLK_d:
+            global disabled
+            disabled = not disabled
 
     player.handle_event(e)
     if not prito.handle_event(e):
@@ -88,8 +92,9 @@ def update():
         return
     gfw.world.update()
 
-    global prito_cooldown
-    prito_cooldown -= gfw.delta_time
+    global prito_cooldown, disabled
+    if not disabled:
+        prito_cooldown -= gfw.delta_time
 
     if prito_cooldown < 0 and not prito.is_gen:
         prito_cooldown = random.uniform(10, 15)
