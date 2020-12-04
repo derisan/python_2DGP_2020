@@ -169,10 +169,7 @@
 ---
 # 최종 발표
 
-## 주차별 Commit 횟수
 ![fcommits](/img/주차별커밋.jpg)
-
-## 개발진척도
 ![progress](/img/개발진척도.jpg)
 
 ## 설치&플레이 링크
